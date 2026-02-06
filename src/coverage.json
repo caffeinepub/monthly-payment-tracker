@@ -1,0 +1,299 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-06T15:54:57.451Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 10,
+    "implemented": 9,
+    "items": [
+      {
+        "id": "REQ-1",
+        "summary": "Implement secure user registration/login using Internet Identity, and gate all app features (transactions, summaries, charts) behind authentication.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/App.tsx",
+          "frontend/src/components/auth/LoginScreen.tsx",
+          "frontend/src/components/auth/ProfileSetupDialog.tsx",
+          "frontend/src/hooks/useCurrentUserProfile.ts",
+          "frontend/src/hooks/useActor.ts",
+          "frontend/src/main.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/App.tsx",
+          "frontend/src/components/auth/LoginScreen.tsx",
+          "frontend/src/components/auth/ProfileSetupDialog.tsx",
+          "frontend/src/hooks/useCurrentUserProfile.ts",
+          "frontend/src/hooks/useActor.ts",
+          "frontend/src/main.tsx"
+        ]
+      },
+      {
+        "id": "REQ-10",
+        "summary": "Ensure the app explicitly communicates that transactions are entered manually and that the app does not connect to real bank accounts.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/disclosures/ManualEntryDisclosure.tsx",
+          "frontend/src/pages/TransactionsPage.tsx",
+          "frontend/src/pages/SettingsPage.tsx",
+          "frontend/index.html"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/disclosures/ManualEntryDisclosure.tsx",
+          "frontend/src/pages/TransactionsPage.tsx",
+          "frontend/src/pages/SettingsPage.tsx",
+          "frontend/index.html"
+        ]
+      },
+      {
+        "id": "REQ-2",
+        "summary": "Create a backend transactions data model and persistence for each authenticated user, supporting adding and listing transactions with: type (Received/Income or Sent/Expense), amount, date, and short note.",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-3",
+        "summary": "Build a mobile-first transaction entry UI that allows authenticated users to add a transaction as Received (Income) or Sent (Expense) with amount, date, and short note, including basic validation and clear error messages in English.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/TransactionsPage.tsx",
+          "frontend/src/hooks/useTransactions.ts",
+          "frontend/src/components/transactions/TransactionForm.tsx",
+          "frontend/src/components/transactions/TransactionList.tsx",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/TransactionsPage.tsx",
+          "frontend/src/hooks/useTransactions.ts",
+          "frontend/src/components/transactions/TransactionForm.tsx",
+          "frontend/src/components/transactions/TransactionList.tsx",
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-4",
+        "summary": "Implement monthly filtering for viewing transaction history: users can select a month/year and view only transactions within that month, ordered by date (newest first).",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/hooks/useSelectedMonth.ts",
+          "frontend/src/components/month/MonthPicker.tsx",
+          "frontend/src/pages/TransactionsPage.tsx",
+          "frontend/src/pages/SummaryPage.tsx",
+          "frontend/src/components/charts/IncomeVsExpenseChart.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/hooks/useSelectedMonth.ts",
+          "frontend/src/components/month/MonthPicker.tsx",
+          "frontend/src/pages/TransactionsPage.tsx",
+          "frontend/src/pages/SummaryPage.tsx",
+          "frontend/src/components/charts/IncomeVsExpenseChart.tsx"
+        ]
+      },
+      {
+        "id": "REQ-5",
+        "summary": "Automatically calculate and display monthly totals for the selected month: total received amount, total sent amount, and monthly balance (Received – Sent).",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/hooks/useMonthlyTotals.ts",
+          "frontend/src/components/summary/MonthlyTotalsCard.tsx",
+          "frontend/src/pages/TransactionsPage.tsx",
+          "frontend/src/pages/SummaryPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/summary/MonthlyTotalsCard.tsx",
+          "frontend/src/pages/TransactionsPage.tsx",
+          "frontend/src/pages/SummaryPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-6",
+        "summary": "Add a Monthly Summary screen for the selected month that clearly displays income (received), expenses (sent), and balance, with a clean layout suitable for small screens.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/SummaryPage.tsx",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/SummaryPage.tsx",
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-7",
+        "summary": "Implement an optional in-app monthly summary notification mechanism that can alert the user when a month has ended and a summary is ready, without relying on push notifications or external messaging services.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/hooks/useMonthlyReminder.ts",
+          "frontend/src/components/notifications/MonthlyReminderBanner.tsx",
+          "frontend/src/pages/SettingsPage.tsx",
+          "frontend/src/App.tsx",
+          "frontend/src/pages/SummaryPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/hooks/useMonthlyReminder.ts",
+          "frontend/src/components/notifications/MonthlyReminderBanner.tsx",
+          "frontend/src/pages/SettingsPage.tsx",
+          "frontend/src/App.tsx",
+          "frontend/src/pages/SummaryPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-8",
+        "summary": "Add basic charts to visualize income vs expenses for the selected month (e.g., simple side-by-side bars or a two-segment comparison), rendered in a mobile-friendly way.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/charts/IncomeVsExpenseChart.tsx",
+          "frontend/src/pages/SummaryPage.tsx",
+          "frontend/src/pages/TransactionsPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/charts/IncomeVsExpenseChart.tsx",
+          "frontend/src/pages/SummaryPage.tsx",
+          "frontend/src/pages/TransactionsPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-9",
+        "summary": "Apply a cohesive, simple, user-friendly visual theme (colors, typography, spacing, and component styling) consistently across all screens, optimized for a mobile-first experience.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/index.css",
+          "frontend/tailwind.config.js",
+          "frontend/src/components/layout/AppLayout.tsx",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/index.css",
+          "frontend/tailwind.config.js",
+          "frontend/src/components/layout/AppLayout.tsx",
+          "frontend/src/App.tsx"
+        ]
+      }
+    ]
+  },
+  "changedFiles": [
+    "backend/authorization/MixinAuthorization.mo",
+    "backend/authorization/access-control.mo",
+    "backend/main.mo",
+    "build-request.json",
+    "build-template/Dockerfile",
+    "build-template/LICENSE",
+    "build-template/README.md",
+    "build-template/deploy.sh",
+    "build-template/icp.yaml",
+    "build-template/package.json",
+    "build-template/pnpm-lock.yaml",
+    "build-template/pnpm-workspace.yaml",
+    "build-template/scripts/prune-unused-images.js",
+    "build-template/scripts/resize-images.js",
+    "build-template/src/backend/canister.yaml",
+    "build-template/src/backend/system-idl/aaaaa-aa.did",
+    "build-template/src/frontend/canister.yaml",
+    "build-template/src/frontend/components.json",
+    "build-template/src/frontend/env.json",
+    "build-template/src/frontend/eslint-rules/no-bigint-in-query-keys.js",
+    "build-template/src/frontend/eslint-rules/require-internet-identity-provider.js",
+    "build-template/src/frontend/eslint.config.js",
+    "build-template/src/frontend/package.json",
+    "build-template/src/frontend/postcss.config.js",
+    "build-template/src/frontend/src/components/ui/accordion.tsx",
+    "build-template/src/frontend/src/components/ui/alert-dialog.tsx",
+    "build-template/src/frontend/src/components/ui/alert.tsx",
+    "build-template/src/frontend/src/components/ui/aspect-ratio.tsx",
+    "build-template/src/frontend/src/components/ui/avatar.tsx",
+    "build-template/src/frontend/src/components/ui/badge.tsx",
+    "build-template/src/frontend/src/components/ui/breadcrumb.tsx",
+    "build-template/src/frontend/src/components/ui/button.tsx",
+    "build-template/src/frontend/src/components/ui/calendar.tsx",
+    "build-template/src/frontend/src/components/ui/card.tsx",
+    "build-template/src/frontend/src/components/ui/carousel.tsx",
+    "build-template/src/frontend/src/components/ui/chart.tsx",
+    "build-template/src/frontend/src/components/ui/checkbox.tsx",
+    "build-template/src/frontend/src/components/ui/collapsible.tsx",
+    "build-template/src/frontend/src/components/ui/command.tsx",
+    "build-template/src/frontend/src/components/ui/context-menu.tsx",
+    "build-template/src/frontend/src/components/ui/dialog.tsx",
+    "build-template/src/frontend/src/components/ui/drawer.tsx",
+    "build-template/src/frontend/src/components/ui/dropdown-menu.tsx",
+    "build-template/src/frontend/src/components/ui/form.tsx",
+    "build-template/src/frontend/src/components/ui/hover-card.tsx",
+    "build-template/src/frontend/src/components/ui/input-otp.tsx",
+    "build-template/src/frontend/src/components/ui/input.tsx",
+    "build-template/src/frontend/src/components/ui/label.tsx",
+    "build-template/src/frontend/src/components/ui/menubar.tsx",
+    "build-template/src/frontend/src/components/ui/navigation-menu.tsx",
+    "build-template/src/frontend/src/components/ui/pagination.tsx",
+    "build-template/src/frontend/src/components/ui/popover.tsx",
+    "build-template/src/frontend/src/components/ui/progress.tsx",
+    "build-template/src/frontend/src/components/ui/radio-group.tsx",
+    "build-template/src/frontend/src/components/ui/resizable.tsx",
+    "build-template/src/frontend/src/components/ui/scroll-area.tsx",
+    "build-template/src/frontend/src/components/ui/select.tsx",
+    "build-template/src/frontend/src/components/ui/separator.tsx",
+    "build-template/src/frontend/src/components/ui/sheet.tsx",
+    "build-template/src/frontend/src/components/ui/sidebar.tsx",
+    "build-template/src/frontend/src/components/ui/skeleton.tsx",
+    "build-template/src/frontend/src/components/ui/slider.tsx",
+    "build-template/src/frontend/src/components/ui/sonner.tsx",
+    "build-template/src/frontend/src/components/ui/switch.tsx",
+    "build-template/src/frontend/src/components/ui/table.tsx",
+    "build-template/src/frontend/src/components/ui/tabs.tsx",
+    "build-template/src/frontend/src/components/ui/textarea.tsx",
+    "build-template/src/frontend/src/components/ui/toggle-group.tsx",
+    "build-template/src/frontend/src/components/ui/toggle.tsx",
+    "build-template/src/frontend/src/components/ui/tooltip.tsx",
+    "build-template/src/frontend/src/hooks/use-mobile.tsx",
+    "build-template/src/frontend/src/lib/utils.ts",
+    "build-template/src/frontend/tsconfig.json",
+    "build-template/src/frontend/vite.config.js",
+    "build-template/tsconfig.json",
+    "caffeine.lock.json",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/public/assets/generated/app-icon.dim_512x512.png",
+    "frontend/public/assets/generated/empty-transactions.dim_1200x800.png",
+    "frontend/src/App.tsx",
+    "frontend/src/backend.d.ts",
+    "frontend/src/backend.ts",
+    "frontend/src/components/auth/LoginScreen.tsx",
+    "frontend/src/components/auth/ProfileSetupDialog.tsx",
+    "frontend/src/components/charts/IncomeVsExpenseChart.tsx",
+    "frontend/src/components/disclosures/ManualEntryDisclosure.tsx",
+    "frontend/src/components/layout/AppLayout.tsx",
+    "frontend/src/components/month/MonthPicker.tsx",
+    "frontend/src/components/notifications/MonthlyReminderBanner.tsx",
+    "frontend/src/components/summary/MonthlyTotalsCard.tsx",
+    "frontend/src/components/transactions/TransactionForm.tsx",
+    "frontend/src/components/transactions/TransactionList.tsx",
+    "frontend/src/config.ts",
+    "frontend/src/declarations/backend.did.d.ts",
+    "frontend/src/declarations/backend.did.js",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useCurrentUserProfile.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useMonthlyReminder.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/hooks/useSelectedMonth.ts",
+    "frontend/src/hooks/useTransactions.ts",
+    "frontend/src/index.css",
+    "frontend/src/main.tsx",
+    "frontend/src/pages/SettingsPage.tsx",
+    "frontend/src/pages/SummaryPage.tsx",
+    "frontend/src/pages/TransactionsPage.tsx",
+    "frontend/src/ui-summary.json",
+    "frontend/src/utils/StorageClient.ts",
+    "frontend/src/utils/urlParams.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}

@@ -1,0 +1,294 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Monthly Payment Tracker (Frontend)",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Gate the entire app behind Internet Identity login, including first-time profile setup, logout, and authenticated-only navigation.",
+      "acceptanceCriteria": [
+        "Unauthenticated users can only see a login/onboarding screen with a clear call to sign in via Internet Identity.",
+        "Authenticated users can sign out and are returned to the unauthenticated screen."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "create",
+          "description": "Create the app shell that (1) uses the authorization component’s Internet Identity flow to determine authentication state, (2) renders an unauthenticated Login/Onboarding screen when logged out, and (3) renders the authenticated experience (transactions, summary, charts, settings) only when logged in. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/auth/LoginScreen.tsx",
+          "operation": "create",
+          "description": "Add a mobile-first unauthenticated screen with a single clear Internet Identity sign-in CTA, and an explanation of what the app does. Use the authorization component’s recommended login/logout patterns (including handling ‘User is already authenticated’). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/auth/ProfileSetupDialog.tsx",
+          "operation": "create",
+          "description": "Implement first-login profile setup (ask for name) driven by getCallerUserProfile/saveCallerUserProfile; prevent modal flash by following the authorization component guidance for query enablement and isFetched checks. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useCurrentUserProfile.ts",
+          "operation": "create",
+          "description": "Create react-query hooks for getCallerUserProfile and saveCallerUserProfile, with proper actor dependency gating and retry=false for unauthorized cases; surface friendly errors. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useActor.ts",
+          "operation": "modify",
+          "description": "Ensure actor lifecycle cleanly supports authenticated/anonymous transitions and that dependent react-query caches are invalidated/refetched on identity changes; keep behavior consistent with authenticated-only data access."
+        },
+        {
+          "path": "frontend/src/main.tsx",
+          "operation": "modify",
+          "description": "Ensure the app’s QueryClient + InternetIdentityProvider wiring supports full cache clearing on logout (triggered via UI) and consistent auth gating behavior."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Provide a mobile-first transaction entry form with validation, clear English errors, and react-query refresh so new transactions appear immediately.",
+      "acceptanceCriteria": [
+        "User can choose transaction type (Received/Sent) via an obvious control.",
+        "Amount is required and must be a positive number; date is required; note is optional with a reasonable max length.",
+        "On successful add, the new transaction appears in the transaction list without a full page refresh (react-query invalidation/refetch)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/TransactionsPage.tsx",
+          "operation": "create",
+          "description": "Create the authenticated Transactions page containing: (1) transaction entry form (Received/Sent, amount, date, optional note), (2) inline validation and English error messages, and (3) the transaction list for the selected month."
+        },
+        {
+          "path": "frontend/src/hooks/useTransactions.ts",
+          "operation": "create",
+          "description": "Add react-query hooks for adding a transaction and fetching transactions for the selected month; on successful add, invalidate/refetch the month-scoped queries used by list/totals/charts."
+        },
+        {
+          "path": "frontend/src/components/transactions/TransactionForm.tsx",
+          "operation": "create",
+          "description": "Implement the transaction form UI and validation (positive amount required; date required; note optional with max length); call the add-transaction mutation and show success/failure states in English."
+        },
+        {
+          "path": "frontend/src/components/transactions/TransactionList.tsx",
+          "operation": "create",
+          "description": "Render a compact, mobile-friendly list for the selected month, including an empty-state that uses the generated illustration at frontend/public/assets/generated/empty-transactions.dim_1200x800.png."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire the Transactions page into the authenticated navigation as the default authenticated view (so the new pages/components are not orphaned)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Add month/year selection to filter transaction history and drive list/totals/charts updates for the selected month.",
+      "acceptanceCriteria": [
+        "UI provides a month selector (month + year) optimized for mobile.",
+        "The transaction list updates to show only transactions for the selected month.",
+        "Selecting a different month updates totals and charts for that month."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useSelectedMonth.ts",
+          "operation": "create",
+          "description": "Create a small state hook (or context) to manage the selected month/year across Transactions, Summary, and Charts; persist last selection locally for convenience."
+        },
+        {
+          "path": "frontend/src/components/month/MonthPicker.tsx",
+          "operation": "create",
+          "description": "Implement a mobile-friendly month+year picker control (e.g., month dropdown + year stepper) that updates the shared selected month state."
+        },
+        {
+          "path": "frontend/src/pages/TransactionsPage.tsx",
+          "operation": "modify",
+          "description": "Integrate MonthPicker to scope the transaction list query to the chosen month/year and update UI state immediately on selection."
+        },
+        {
+          "path": "frontend/src/pages/SummaryPage.tsx",
+          "operation": "modify",
+          "description": "Ensure the Summary view uses the same selected month/year source so changing the month updates summary numbers and charts."
+        },
+        {
+          "path": "frontend/src/components/charts/IncomeVsExpenseChart.tsx",
+          "operation": "modify",
+          "description": "Update the chart component to re-render based on the selected month/year and to reflect the currently filtered totals."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Compute and display monthly totals (received, sent, balance) for the selected month and keep them in sync with data changes.",
+      "acceptanceCriteria": [
+        "For a selected month, the UI clearly shows: Total Received, Total Sent, and Balance.",
+        "Totals match the sum of transactions filtered to that month (income adds to received, expense adds to sent).",
+        "Balance is computed as received minus sent and updates when transactions are added."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useMonthlyTotals.ts",
+          "operation": "create",
+          "description": "Create a react-query hook to fetch monthly totals for the selected month/year and expose loading/error states in a UI-friendly way."
+        },
+        {
+          "path": "frontend/src/components/summary/MonthlyTotalsCard.tsx",
+          "operation": "create",
+          "description": "Create a compact, mobile-friendly totals card that displays Total Received, Total Sent, and Balance with clear English labels and formatting."
+        },
+        {
+          "path": "frontend/src/pages/TransactionsPage.tsx",
+          "operation": "modify",
+          "description": "Display the MonthlyTotalsCard above the list; ensure it updates when month changes and after a successful transaction add (via shared react-query invalidation)."
+        },
+        {
+          "path": "frontend/src/pages/SummaryPage.tsx",
+          "operation": "modify",
+          "description": "Display the same MonthlyTotalsCard (or equivalent) so the Summary view and Transactions view remain consistent for the selected month."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Add a navigable Monthly Summary screen for the selected month with a clean, narrow-screen-friendly layout.",
+      "acceptanceCriteria": [
+        "There is a navigable Summary view for the currently selected month.",
+        "Summary view displays the three key numbers with clear labels in English.",
+        "Summary view remains readable on a narrow mobile viewport (no horizontal scrolling)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/SummaryPage.tsx",
+          "operation": "create",
+          "description": "Create the Summary page for the selected month showing totals (income/expenses/balance) and a clean layout optimized for small screens."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire SummaryPage into authenticated navigation (e.g., a bottom tab / segmented control) so users can reach it from Transactions."
+        }
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "summary": "Implement an optional per-user in-app monthly summary reminder with a user-controlled toggle and dismissible notice.",
+      "acceptanceCriteria": [
+        "App includes a user-controlled setting/toggle (e.g., “Monthly summary reminder”) stored per user.",
+        "When enabled, the app shows an in-app notice/banner/toast when the current date is in a new month relative to the last time the user viewed/acknowledged a summary (per user).",
+        "The notification is fully in-app (no email/SMS/push) and can be dismissed."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useMonthlyReminder.ts",
+          "operation": "create",
+          "description": "Implement reminder state management: per-user (keyed by authenticated principal) toggle storage and last-acknowledged month tracking using local storage; expose helpers to detect ‘new month’ and to dismiss/acknowledge."
+        },
+        {
+          "path": "frontend/src/components/notifications/MonthlyReminderBanner.tsx",
+          "operation": "create",
+          "description": "Add a dismissible in-app banner/notice that appears when reminder conditions are met; include a clear CTA to view the Summary for the new month and a dismiss control."
+        },
+        {
+          "path": "frontend/src/pages/SettingsPage.tsx",
+          "operation": "create",
+          "description": "Add a Settings page with a ‘Monthly summary reminder’ toggle and short explanatory text in English; store the setting per user."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire SettingsPage into authenticated navigation and mount MonthlyReminderBanner within the authenticated layout so it can appear above pages when enabled."
+        },
+        {
+          "path": "frontend/src/pages/SummaryPage.tsx",
+          "operation": "modify",
+          "description": "When a user visits the Summary view, update the ‘last acknowledged month’ so reminders don’t repeatedly fire for the same month unless conditions change."
+        }
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "summary": "Render a simple, mobile-friendly income-vs-expenses chart for the selected month that updates with month changes and new transactions.",
+      "acceptanceCriteria": [
+        "Chart displays two values (income vs expenses) for the selected month in a clear visual comparison.",
+        "Chart updates when the selected month changes or when transactions are added.",
+        "Chart has accessible labels/legend in English and does not depend on external services."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/charts/IncomeVsExpenseChart.tsx",
+          "operation": "create",
+          "description": "Create a basic chart component (no external services) that visually compares income vs expenses for the selected month (e.g., two bars) with accessible English labels/legend."
+        },
+        {
+          "path": "frontend/src/pages/SummaryPage.tsx",
+          "operation": "modify",
+          "description": "Place IncomeVsExpenseChart on the Summary page and bind it to the same selected month and monthly totals data source so it updates on changes."
+        },
+        {
+          "path": "frontend/src/pages/TransactionsPage.tsx",
+          "operation": "modify",
+          "description": "Optionally show the chart (or a compact preview) in the Transactions page header area; ensure it remains mobile-friendly and updates via the shared totals query."
+        }
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "summary": "Apply a cohesive, mobile-first visual theme with consistent styling across screens, avoiding a blue/purple primary palette.",
+      "acceptanceCriteria": [
+        "The app uses a consistent design system across screens (buttons, inputs, cards, headings).",
+        "Layout is optimized for phone-sized viewports with clear spacing and readable text.",
+        "Do not use a blue/purple primary palette unless explicitly requested; choose an alternative coherent palette."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "create",
+          "description": "Add global Tailwind/base styles and CSS variables for a cohesive theme using a warm green primary palette (avoid blue/purple), plus consistent typography, spacing, and surface colors."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Adjust theme tokens (chart colors, primary/accent variables mapping) as needed to support the chosen warm green palette consistently across components."
+        },
+        {
+          "path": "frontend/src/components/layout/AppLayout.tsx",
+          "operation": "create",
+          "description": "Create a reusable authenticated layout (header/nav + content container) that enforces mobile-first spacing and consistent UI structure across Transactions, Summary, and Settings."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Adopt AppLayout for all authenticated pages so the theme/styling is applied consistently and the experience remains optimized for small screens."
+        }
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "summary": "Communicate clearly in the authenticated experience that transactions are entered manually and the app does not connect to bank accounts.",
+      "acceptanceCriteria": [
+        "On first use and/or in a Settings/About section, the app shows a short English statement that transactions are manual and there is no bank connection.",
+        "The statement is visible somewhere in the authenticated experience (not only on a hidden page)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/disclosures/ManualEntryDisclosure.tsx",
+          "operation": "create",
+          "description": "Create a short, reusable English disclosure component stating that transactions are entered manually and there is no bank connection."
+        },
+        {
+          "path": "frontend/src/pages/TransactionsPage.tsx",
+          "operation": "modify",
+          "description": "Place the disclosure in a visible location within the main authenticated workflow (e.g., near the form header or below totals) so it’s not hidden."
+        },
+        {
+          "path": "frontend/src/pages/SettingsPage.tsx",
+          "operation": "modify",
+          "description": "Include the same disclosure text in Settings/About for reinforcement and discoverability."
+        },
+        {
+          "path": "frontend/index.html",
+          "operation": "modify",
+          "description": "Wire the generated app icon asset frontend/public/assets/generated/app-icon.dim_512x512.png as the site icon so branding is consistent."
+        }
+      ]
+    }
+  ]
+}

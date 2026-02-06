@@ -1,2 +1,3 @@
-# monthly-payment-tracker
-Exported from Caffeine project: Monthly Payment Tracker
+## Monthly Payment Tracker
+
+To run app build and run docker image: `docker build -t app . docker run -it --network host app`

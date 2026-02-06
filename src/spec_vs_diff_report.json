@@ -1,0 +1,87 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-06T15:54:57.448Z",
+  "summary": "Diff adds a full authenticated frontend flow (Internet Identity login screen, app layout with logout, transactions UI with month picker, summary totals + chart, and an in-app monthly reminder banner) and a Motoko backend with transaction APIs. However, several backend data-model and persistence acceptance criteria are not evidenced (stable persistence, transaction id/createdAt), and monthly ordering is not clearly implemented. The diff also introduces unrequested access-control/admin-token and user profile features.",
+  "missing_requirements": [
+    {
+      "id": "REQ-2",
+      "requirement": "Persist per-user transactions in stable storage so data survives canister upgrades.",
+      "reason": "The backend uses in-memory `Map.empty` for `userTransactionsMap` and `userProfiles`, but the diff excerpt does not show any `stable var`, `preupgrade/postupgrade`, or other stable-structure persistence implementation.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "requirement": "Each transaction includes: unique id, kind (income/expense), amount, date, note, createdAt timestamp.",
+      "reason": "The `Transaction` type shown contains `transactionType`, `amount`, `date`, and `note` only; no unique `id` and no `createdAt` are evidenced. Also `kind` is represented as `transactionType` but the acceptance criteria explicitly calls out `kind` plus required metadata fields.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "requirement": "Transactions within a selected month are ordered by date (newest first).",
+      "reason": "`getTransactionsForMonth` filters and then returns `toArray().reverse()`. There is a `compareByDate` helper, but no sort is evidenced; reversing insertion order does not guarantee newest-by-date ordering.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "Custom authorization/access-control system with admin permissions and secret-token initialization.",
+      "reason": "BuildRequest specifies Internet Identity auth and gating, but does not request an additional admin/permission layer or secret URL parameter initialization; the diff includes AccessControl/MixinAuthorization and `_initializeAccessControlWithSecret` driven by a `caffeineAdminToken` URL parameter.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/hooks/useActor.ts",
+        "backend/main.mo imports: authorization/access-control, authorization/MixinAuthorization"
+      ]
+    },
+    {
+      "description": "User profile creation/management (name) and forced profile setup dialog after login.",
+      "reason": "BuildRequest does not mention user profiles; diff adds `UserProfile` backend methods and a frontend `ProfileSetupDialog` flow that blocks the app until a name is saved.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/components/auth/ProfileSetupDialog.tsx",
+        "frontend/src/hooks/useCurrentUserProfile.ts",
+        "frontend/src/App.tsx"
+      ]
+    }
+  ],
+  "confidence": 0.74,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/components/auth/LoginScreen.tsx",
+    "frontend/src/components/auth/ProfileSetupDialog.tsx",
+    "frontend/src/components/charts/IncomeVsExpenseChart.tsx",
+    "frontend/src/components/disclosures/ManualEntryDisclosure.tsx",
+    "frontend/src/components/layout/AppLayout.tsx",
+    "frontend/src/components/month/MonthPicker.tsx",
+    "frontend/src/components/notifications/MonthlyReminderBanner.tsx",
+    "frontend/src/components/summary/MonthlyTotalsCard.tsx",
+    "frontend/src/components/transactions/TransactionForm.tsx",
+    "frontend/src/components/transactions/TransactionList.tsx",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useCurrentUserProfile.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useMonthlyReminder.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/hooks/useSelectedMonth.ts",
+    "frontend/src/hooks/useTransactions.ts",
+    "frontend/src/index.css",
+    "frontend/src/main.tsx",
+    "frontend/src/pages/SettingsPage.tsx",
+    "frontend/src/pages/SummaryPage.tsx",
+    "frontend/src/pages/TransactionsPage.tsx",
+    "frontend/src/utils/urlParams.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}

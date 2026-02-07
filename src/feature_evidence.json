@@ -2,15 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-implement-secure-user-registration-login-using-internet-identity-and-gate-all-app-features-transactions-summaries-charts-behind-authentication",
-      "featureTitle": "Implement secure user registration/login using Internet Identity, and gate all app features (transactions, summaries, charts) behind authentication.",
+      "featureId": "feature-re-run-the-full-build-and-deployment-of-the-existing-finance-tracker-app-draft-version-2-to-production-on-the-internet-computer-ensuring-the-process-completes-successfully-end-to-end-frontend-build-canister-build-and-deploy",
+      "featureTitle": "Re-run the full build and deployment of the existing Finance Tracker app (Draft Version 2) to production on the Internet Computer, ensuring the process completes successfully end-to-end (frontend build, canister build, and deploy).",
       "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/components/auth/LoginScreen.tsx",
-        "frontend/src/components/auth/ProfileSetupDialog.tsx",
-        "frontend/src/hooks/useActor.ts",
-        "frontend/src/hooks/useCurrentUserProfile.ts",
-        "frontend/src/main.tsx"
+        "frontend/README.md"
       ],
       "components": [
         "authorization@4.0.0",
@@ -21,19 +16,16 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-1"
+        "REQ-2"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-build-a-mobile-first-transaction-entry-ui-that-allows-authenticated-users-to-add-a-transaction-as-received-income-or-sent-expense-with-amount-date-and-short-note-including-basic-validation-and-clear-error-messages-in-english",
-      "featureTitle": "Build a mobile-first transaction entry UI that allows authenticated users to add a transaction as Received (Income) or Sent (Expense) with amount, date, and short note, including basic validation and clear error messages in English.",
+      "featureId": "feature-identify-and-resolve-any-deterministic-project-level-causes-of-intermittent-build-deploy-failure-e-g-dependency-install-issues-typecheck-build-errors-missing-configuration-so-that-consecutive-deployments-can-be-executed-reliably",
+      "featureTitle": "Identify and resolve any deterministic, project-level causes of intermittent build/deploy failure (e.g., dependency/install issues, typecheck/build errors, missing configuration) so that consecutive deployments can be executed reliably.",
       "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/components/transactions/TransactionForm.tsx",
-        "frontend/src/components/transactions/TransactionList.tsx",
-        "frontend/src/hooks/useTransactions.ts",
-        "frontend/src/pages/TransactionsPage.tsx"
+        "frontend/.env.example",
+        "frontend/src/vite-env.d.ts"
       ],
       "components": [
         "authorization@4.0.0",
@@ -45,158 +37,6 @@
       ],
       "testIds": [
         "REQ-3"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-implement-monthly-filtering-for-viewing-transaction-history-users-can-select-a-month-year-and-view-only-transactions-within-that-month-ordered-by-date-newest-first",
-      "featureTitle": "Implement monthly filtering for viewing transaction history: users can select a month/year and view only transactions within that month, ordered by date (newest first).",
-      "files": [
-        "frontend/src/components/charts/IncomeVsExpenseChart.tsx",
-        "frontend/src/components/month/MonthPicker.tsx",
-        "frontend/src/hooks/useSelectedMonth.ts",
-        "frontend/src/pages/SummaryPage.tsx",
-        "frontend/src/pages/TransactionsPage.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-4"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-automatically-calculate-and-display-monthly-totals-for-the-selected-month-total-received-amount-total-sent-amount-and-monthly-balance-received-sent",
-      "featureTitle": "Automatically calculate and display monthly totals for the selected month: total received amount, total sent amount, and monthly balance (Received – Sent).",
-      "files": [
-        "frontend/src/components/summary/MonthlyTotalsCard.tsx",
-        "frontend/src/pages/SummaryPage.tsx",
-        "frontend/src/pages/TransactionsPage.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-5"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-add-a-monthly-summary-screen-for-the-selected-month-that-clearly-displays-income-received-expenses-sent-and-balance-with-a-clean-layout-suitable-for-small-screens",
-      "featureTitle": "Add a Monthly Summary screen for the selected month that clearly displays income (received), expenses (sent), and balance, with a clean layout suitable for small screens.",
-      "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/pages/SummaryPage.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-6"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-implement-an-optional-in-app-monthly-summary-notification-mechanism-that-can-alert-the-user-when-a-month-has-ended-and-a-summary-is-ready-without-relying-on-push-notifications-or-external-messaging-services",
-      "featureTitle": "Implement an optional in-app monthly summary notification mechanism that can alert the user when a month has ended and a summary is ready, without relying on push notifications or external messaging services.",
-      "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/components/notifications/MonthlyReminderBanner.tsx",
-        "frontend/src/hooks/useMonthlyReminder.ts",
-        "frontend/src/pages/SettingsPage.tsx",
-        "frontend/src/pages/SummaryPage.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-7"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-add-basic-charts-to-visualize-income-vs-expenses-for-the-selected-month-e-g-simple-side-by-side-bars-or-a-two-segment-comparison-rendered-in-a-mobile-friendly-way",
-      "featureTitle": "Add basic charts to visualize income vs expenses for the selected month (e.g., simple side-by-side bars or a two-segment comparison), rendered in a mobile-friendly way.",
-      "files": [
-        "frontend/src/components/charts/IncomeVsExpenseChart.tsx",
-        "frontend/src/pages/SummaryPage.tsx",
-        "frontend/src/pages/TransactionsPage.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-8"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-apply-a-cohesive-simple-user-friendly-visual-theme-colors-typography-spacing-and-component-styling-consistently-across-all-screens-optimized-for-a-mobile-first-experience",
-      "featureTitle": "Apply a cohesive, simple, user-friendly visual theme (colors, typography, spacing, and component styling) consistently across all screens, optimized for a mobile-first experience.",
-      "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/components/layout/AppLayout.tsx",
-        "frontend/src/index.css",
-        "frontend/tailwind.config.js"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-9"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-ensure-the-app-explicitly-communicates-that-transactions-are-entered-manually-and-that-the-app-does-not-connect-to-real-bank-accounts",
-      "featureTitle": "Ensure the app explicitly communicates that transactions are entered manually and that the app does not connect to real bank accounts.",
-      "files": [
-        "frontend/index.html",
-        "frontend/src/components/disclosures/ManualEntryDisclosure.tsx",
-        "frontend/src/pages/SettingsPage.tsx",
-        "frontend/src/pages/TransactionsPage.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-10"
       ],
       "confidence": "high"
     }

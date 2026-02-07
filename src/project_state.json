@@ -1,153 +1,32 @@
 {
   "schemaVersion": "1.0.0",
   "projectStateVersion": 3,
-  "summary": "Mobile app “Monthly Payment Tracker” for manually tracking monthly income/expenses with secure auth, transaction entry, monthly totals/balance, summaries, optional notifications, filters, and basic charts.",
-  "architectural_notes": [
-    "Transactions are entered manually; app does not connect to real bank accounts."
+  "summary": "New project",
+  "architectural_notes": [],
+  "known_issues": [
+    "Deployment/build process is failing intermittently (\"hit a snag\" / language model error), preventing successful deploy."
   ],
-  "known_issues": [],
-  "isFixRequest": false,
-  "imageRequirements": "## Required Images\n- App icon: minimal ledger/checkmark symbol, flat design, warm green palette (app-icon.dim_512x512.png)\n- Empty state illustration: simple wallet and receipt outline, light background, warm green + neutral gray (empty-transactions.dim_1200x800.png)",
+  "isFixRequest": true,
   "existing_features": [
     {
-      "id": "feature-implement-secure-user-registration-login-using-internet-identity-and-gate-all-app-features-transactions-summaries-charts-behind-authentication",
-      "title": "Implement secure user registration/login using Internet Identity, and gate all app features (transactions, summaries, charts) behind authentication.",
+      "id": "feature-re-run-the-full-build-and-deployment-of-the-existing-finance-tracker-app-draft-version-2-to-production-on-the-internet-computer-ensuring-the-process-completes-successfully-end-to-end-frontend-build-canister-build-and-deploy",
+      "title": "Re-run the full build and deployment of the existing Finance Tracker app (Draft Version 2) to production on the Internet Computer, ensuring the process completes successfully end-to-end (frontend build, canister build, and deploy).",
       "reqIds": [
-        "REQ-1"
+        "REQ-2"
       ],
       "version": 1
     },
     {
-      "id": "feature-build-a-mobile-first-transaction-entry-ui-that-allows-authenticated-users-to-add-a-transaction-as-received-income-or-sent-expense-with-amount-date-and-short-note-including-basic-validation-and-clear-error-messages-in-english",
-      "title": "Build a mobile-first transaction entry UI that allows authenticated users to add a transaction as Received (Income) or Sent (Expense) with amount, date, and short note, including basic validation and clear error messages in English.",
+      "id": "feature-identify-and-resolve-any-deterministic-project-level-causes-of-intermittent-build-deploy-failure-e-g-dependency-install-issues-typecheck-build-errors-missing-configuration-so-that-consecutive-deployments-can-be-executed-reliably",
+      "title": "Identify and resolve any deterministic, project-level causes of intermittent build/deploy failure (e.g., dependency/install issues, typecheck/build errors, missing configuration) so that consecutive deployments can be executed reliably.",
       "reqIds": [
         "REQ-3"
       ],
       "version": 1
-    },
-    {
-      "id": "feature-implement-monthly-filtering-for-viewing-transaction-history-users-can-select-a-month-year-and-view-only-transactions-within-that-month-ordered-by-date-newest-first",
-      "title": "Implement monthly filtering for viewing transaction history: users can select a month/year and view only transactions within that month, ordered by date (newest first).",
-      "reqIds": [
-        "REQ-4"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-automatically-calculate-and-display-monthly-totals-for-the-selected-month-total-received-amount-total-sent-amount-and-monthly-balance-received-sent",
-      "title": "Automatically calculate and display monthly totals for the selected month: total received amount, total sent amount, and monthly balance (Received – Sent).",
-      "reqIds": [
-        "REQ-5"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-add-a-monthly-summary-screen-for-the-selected-month-that-clearly-displays-income-received-expenses-sent-and-balance-with-a-clean-layout-suitable-for-small-screens",
-      "title": "Add a Monthly Summary screen for the selected month that clearly displays income (received), expenses (sent), and balance, with a clean layout suitable for small screens.",
-      "reqIds": [
-        "REQ-6"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-implement-an-optional-in-app-monthly-summary-notification-mechanism-that-can-alert-the-user-when-a-month-has-ended-and-a-summary-is-ready-without-relying-on-push-notifications-or-external-messaging-services",
-      "title": "Implement an optional in-app monthly summary notification mechanism that can alert the user when a month has ended and a summary is ready, without relying on push notifications or external messaging services.",
-      "reqIds": [
-        "REQ-7"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-add-basic-charts-to-visualize-income-vs-expenses-for-the-selected-month-e-g-simple-side-by-side-bars-or-a-two-segment-comparison-rendered-in-a-mobile-friendly-way",
-      "title": "Add basic charts to visualize income vs expenses for the selected month (e.g., simple side-by-side bars or a two-segment comparison), rendered in a mobile-friendly way.",
-      "reqIds": [
-        "REQ-8"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-apply-a-cohesive-simple-user-friendly-visual-theme-colors-typography-spacing-and-component-styling-consistently-across-all-screens-optimized-for-a-mobile-first-experience",
-      "title": "Apply a cohesive, simple, user-friendly visual theme (colors, typography, spacing, and component styling) consistently across all screens, optimized for a mobile-first experience.",
-      "reqIds": [
-        "REQ-9"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-ensure-the-app-explicitly-communicates-that-transactions-are-entered-manually-and-that-the-app-does-not-connect-to-real-bank-accounts",
-      "title": "Ensure the app explicitly communicates that transactions are entered manually and that the app does not connect to real bank accounts.",
-      "reqIds": [
-        "REQ-10"
-      ],
-      "version": 1
     }
   ],
-  "new_feature_requests": [
-    {
-      "id": "AR-1",
-      "summary": "User registration and secure login",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-2",
-      "summary": "Transaction CRUD: add income/expense with amount, date, and note",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-3",
-      "summary": "Persist transactions in a database (local or backend)",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-4",
-      "summary": "Monthly calculations: total received, total sent, and monthly balance",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-5",
-      "summary": "Monthly summary screen showing income, expenses, and balance",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-6",
-      "summary": "Optional monthly summary notifications",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-7",
-      "summary": "Monthly filters for viewing transaction history",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-8",
-      "summary": "Basic charts visualizing income vs expenses",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-9",
-      "summary": "Simple, user-friendly mobile UI",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-11",
-      "summary": "Create a backend transactions data model and persistence for each authenticated user, supporting adding and listing transactions with: type (Received/Income or Sent/Expense), amount, date, and short note.",
-      "reqIds": [
-        "REQ-2"
-      ],
-      "status": "pending"
-    }
-  ],
-  "gameProjectType": "none",
-  "projectName": "Monthly Payment Tracker",
+  "new_feature_requests": [],
+  "projectName": "Re-run deployment and stabilize build for Draft Version 2",
   "clarification_mode": "instant",
   "clarification_rounds": 0
 }

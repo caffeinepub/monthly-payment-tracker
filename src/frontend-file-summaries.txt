@@ -5,7 +5,7 @@
   "frontend/src/components/layout/AppLayout.tsx": "Main authenticated layout with header, bottom navigation (Transactions/Summary/Settings), monthly reminder banner, and logout confirmation dialog.",
   "frontend/src/pages/TransactionsPage.tsx": "Primary page showing month picker, totals card, chart preview, transaction form, and transaction list for the selected month.",
   "frontend/src/pages/SummaryPage.tsx": "Monthly summary page displaying balance highlight, income/expense cards, detailed chart, and totals; acknowledges month for reminder system.",
-  "frontend/src/pages/SettingsPage.tsx": "Settings page with user profile display, monthly reminder toggle, manual entry disclosure, and app attribution footer.",
+  "frontend/src/pages/SettingsPage.tsx": "Settings page with user profile display, monthly reminder toggle, manual entry disclosure, app link sharing section using getPublicAppUrl() utility with copy-to-clipboard functionality, and app attribution footer.",
   "frontend/src/components/transactions/TransactionForm.tsx": "Form component for adding income/expense transactions with type tabs, amount/date/note inputs, validation, and success handling.",
   "frontend/src/components/transactions/TransactionList.tsx": "Displays list of transactions for selected month with income/expense icons, amounts, dates, notes, and empty state illustration.",
   "frontend/src/components/summary/MonthlyTotalsCard.tsx": "Card component showing total received, total sent, and balance with color-coded styling and icons.",
@@ -19,5 +19,12 @@
   "frontend/src/hooks/useMonthlyReminder.ts": "Hook managing per-user monthly reminder preferences, acknowledgment tracking, and reminder display logic using localStorage.",
   "frontend/src/index.css": "Global styles with warm green OKLCH color palette for light/dark modes, avoiding blue/purple, with emerald and teal accent colors.",
   "frontend/index.html": "HTML entry point with app title, viewport meta, and app icon favicon reference.",
-  "frontend/src/hooks/useQueries.ts": "Empty placeholder file as queries are organized in feature-specific hook files for better maintainability."
+  "frontend/src/hooks/useQueries.ts": "Empty placeholder file as queries are organized in feature-specific hook files for better maintainability.",
+  "frontend/src/utils/copyToClipboard.ts": "Utility function that attempts to copy text to clipboard using modern navigator.clipboard API with legacy execCommand fallback for broader browser support.",
+  "frontend/README.md": "Comprehensive frontend documentation with development setup, production deployment instructions for Internet Computer, build verification checklist, troubleshooting guide, and project architecture overview.",
+  "frontend/src/utils/getPublicAppUrl.ts": "Utility function that returns the public app URL, checking for environment variable override first, then falling back to window.location.origin for both development and production use.",
+  "frontend/src/hooks/useInternetIdentity.ts": "Internet Identity authentication provider with Vite-compatible environment variable access, using import.meta.env.VITE_II_URL with fallback to default IC identity provider.",
+  "frontend/src/hooks/useActor.ts": "Backend actor initialization hook with resilient access control setup, removing non-existent method calls and improving error handling for consecutive deploy cycles.",
+  "frontend/src/vite-env.d.ts": "TypeScript definitions for Vite environment variables including VITE_PUBLIC_APP_URL and VITE_II_URL to prevent typecheck failures.",
+  "frontend/.env.example": "Example environment configuration file documenting optional Vite-prefixed variables for production builds and custom Internet Identity providers."
 }

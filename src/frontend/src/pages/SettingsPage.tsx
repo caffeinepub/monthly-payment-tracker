@@ -6,12 +6,29 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Separator } from '@/components/ui/separator';
-import { User, Bell, Info, Heart } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { User, Bell, Info, Heart, Link2, Copy } from 'lucide-react';
+import { toast } from 'sonner';
+import { copyToClipboard } from '../utils/copyToClipboard';
+import { getPublicAppUrl } from '../utils/getPublicAppUrl';
 
 export default function SettingsPage() {
   const { data: userProfile } = useGetCallerUserProfile();
   const { identity } = useInternetIdentity();
   const { reminderEnabled, toggleReminder } = useMonthlyReminder();
+
+  const appUrl = getPublicAppUrl();
+
+  const handleCopyLink = async () => {
+    const success = await copyToClipboard(appUrl);
+    
+    if (success) {
+      toast.success('Link copied to clipboard!');
+    } else {
+      toast.error('Failed to copy link. Please select and copy the URL manually.');
+    }
+  };
 
   return (
     <div className="container mx-auto px-4 py-6 max-w-2xl space-y-6">
@@ -83,6 +100,35 @@ export default function SettingsPage() {
         </CardHeader>
         <CardContent className="space-y-4">
           <ManualEntryDisclosure />
+          <Separator />
+          
+          {/* App Link Section */}
+          <div className="space-y-3">
+            <div className="flex items-center gap-2">
+              <Link2 className="w-4 h-4 text-muted-foreground" />
+              <Label className="text-base font-medium">App Link</Label>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              Share this production link to access your app from anywhere
+            </p>
+            <div className="flex gap-2">
+              <Input
+                value={appUrl}
+                readOnly
+                className="flex-1 font-mono text-sm"
+              />
+              <Button
+                onClick={handleCopyLink}
+                variant="outline"
+                size="default"
+                className="shrink-0"
+              >
+                <Copy className="w-4 h-4 mr-2" />
+                Copy link
+              </Button>
+            </div>
+          </div>
+          
           <Separator />
           <div className="text-center text-sm text-muted-foreground">
             <p className="flex items-center justify-center gap-1">

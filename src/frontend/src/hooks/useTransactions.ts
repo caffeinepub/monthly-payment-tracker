@@ -1,15 +1,56 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { useActor } from './useActor';
-import type { Transaction } from '../backend';
+import { useInternetIdentity } from './useInternetIdentity';
+import type { Transaction, MonthlyTotals, TransactionType } from '../types/transaction';
+
+// LocalStorage key prefix
+const STORAGE_KEY_PREFIX = 'payment_tracker_transactions_';
+
+// Helper to get storage key for user and month
+function getStorageKey(userId: string, year: number, month: number): string {
+  return `${STORAGE_KEY_PREFIX}${userId}_${year}_${month}`;
+}
+
+// Helper to serialize bigint for localStorage
+function serializeTransaction(transaction: Transaction): any {
+  return {
+    transactionType: transaction.transactionType,
+    amount: transaction.amount.toString(),
+    date: transaction.date.toString(),
+    note: transaction.note,
+  };
+}
+
+// Helper to deserialize bigint from localStorage
+function deserializeTransaction(data: any): Transaction {
+  return {
+    transactionType: data.transactionType,
+    amount: BigInt(data.amount),
+    date: BigInt(data.date),
+    note: data.note,
+  };
+}
 
 export function useAddTransaction() {
-  const { actor } = useActor();
+  const { identity } = useInternetIdentity();
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async (transaction: Transaction) => {
-      if (!actor) throw new Error('Actor not available');
-      return actor.addTransaction(transaction);
+      if (!identity) throw new Error('User not authenticated');
+      
+      const userId = identity.getPrincipal().toString();
+      const date = new Date(Number(transaction.date) / 1_000_000);
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1;
+      
+      const storageKey = getStorageKey(userId, year, month);
+      const existingData = localStorage.getItem(storageKey);
+      const transactions: Transaction[] = existingData 
+        ? JSON.parse(existingData).map(deserializeTransaction)
+        : [];
+      
+      transactions.push(transaction);
+      localStorage.setItem(storageKey, JSON.stringify(transactions.map(serializeTransaction)));
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['transactions'] });
@@ -19,34 +60,86 @@ export function useAddTransaction() {
 }
 
 export function useGetTransactionsForMonth(year: number, month: number) {
-  const { actor, isFetching: actorFetching } = useActor();
+  const { identity } = useInternetIdentity();
 
   return useQuery<Transaction[]>({
     queryKey: ['transactions', year, month],
     queryFn: async () => {
-      if (!actor) return [];
+      if (!identity) return [];
+      
+      const userId = identity.getPrincipal().toString();
+      const storageKey = getStorageKey(userId, year, month);
+      const data = localStorage.getItem(storageKey);
+      
+      if (!data) return [];
+      
       try {
-        return await actor.getTransactionsForMonth(BigInt(year), BigInt(month));
-      } catch (error: any) {
-        if (error.message?.includes('no transactions yet')) {
-          return [];
-        }
-        throw error;
+        const transactions = JSON.parse(data).map(deserializeTransaction);
+        // Sort by date descending
+        return transactions.sort((a, b) => Number(b.date - a.date));
+      } catch (error) {
+        console.error('Error parsing transactions:', error);
+        return [];
       }
     },
-    enabled: !!actor && !actorFetching,
+    enabled: !!identity,
   });
 }
 
 export function useGetMonthlyTotals(year: number, month: number) {
-  const { actor, isFetching: actorFetching } = useActor();
+  const { identity } = useInternetIdentity();
 
-  return useQuery({
+  return useQuery<MonthlyTotals>({
     queryKey: ['monthlyTotals', year, month],
     queryFn: async () => {
-      if (!actor) throw new Error('Actor not available');
-      return actor.getMonthlyTotals(BigInt(year), BigInt(month));
+      if (!identity) {
+        return {
+          totalReceived: BigInt(0),
+          totalSent: BigInt(0),
+          balance: BigInt(0),
+        };
+      }
+      
+      const userId = identity.getPrincipal().toString();
+      const storageKey = getStorageKey(userId, year, month);
+      const data = localStorage.getItem(storageKey);
+      
+      if (!data) {
+        return {
+          totalReceived: BigInt(0),
+          totalSent: BigInt(0),
+          balance: BigInt(0),
+        };
+      }
+      
+      try {
+        const transactions: Transaction[] = JSON.parse(data).map(deserializeTransaction);
+        
+        let totalReceived = BigInt(0);
+        let totalSent = BigInt(0);
+        
+        transactions.forEach(transaction => {
+          if (transaction.transactionType === 'received') {
+            totalReceived += transaction.amount;
+          } else {
+            totalSent += transaction.amount;
+          }
+        });
+        
+        return {
+          totalReceived,
+          totalSent,
+          balance: totalReceived - totalSent,
+        };
+      } catch (error) {
+        console.error('Error calculating totals:', error);
+        return {
+          totalReceived: BigInt(0),
+          totalSent: BigInt(0),
+          balance: BigInt(0),
+        };
+      }
     },
-    enabled: !!actor && !actorFetching,
+    enabled: !!identity,
   });
 }

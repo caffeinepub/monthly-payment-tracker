@@ -6,15 +6,15 @@
   "frontend/src/pages/TransactionsPage.tsx": "Primary page showing month picker, totals card, chart preview, transaction form, and transaction list for the selected month.",
   "frontend/src/pages/SummaryPage.tsx": "Monthly summary page displaying balance highlight, income/expense cards, detailed chart, and totals; acknowledges month for reminder system.",
   "frontend/src/pages/SettingsPage.tsx": "Settings page with user profile display, monthly reminder toggle, manual entry disclosure, app link sharing section using getPublicAppUrl() utility with copy-to-clipboard functionality, and app attribution footer.",
-  "frontend/src/components/transactions/TransactionForm.tsx": "Form component for adding income/expense transactions with type tabs, amount/date/note inputs, validation, and success handling.",
-  "frontend/src/components/transactions/TransactionList.tsx": "Displays list of transactions for selected month with income/expense icons, amounts, dates, notes, and empty state illustration.",
+  "frontend/src/components/transactions/TransactionForm.tsx": "Form component for adding income/expense transactions with type tabs, amount/date/note inputs, validation, and localStorage persistence via useAddTransaction hook.",
+  "frontend/src/components/transactions/TransactionList.tsx": "Displays list of transactions for selected month from localStorage with income/expense icons, amounts, dates, notes, and empty state illustration.",
   "frontend/src/components/summary/MonthlyTotalsCard.tsx": "Card component showing total received, total sent, and balance with color-coded styling and icons.",
-  "frontend/src/components/charts/IncomeVsExpenseChart.tsx": "Recharts bar chart comparing income vs expenses for selected month with responsive design and compact mode option.",
+  "frontend/src/components/charts/IncomeVsExpenseChart.tsx": "Recharts bar chart comparing income vs expenses for selected month using localStorage data with responsive design and compact mode option.",
   "frontend/src/components/month/MonthPicker.tsx": "Month/year selector with previous/next navigation buttons and current month display.",
   "frontend/src/components/notifications/MonthlyReminderBanner.tsx": "Dismissible banner shown at top of app when new month starts and reminder is enabled, with view summary action.",
   "frontend/src/components/disclosures/ManualEntryDisclosure.tsx": "Informational component explaining that transactions are manual and no bank connection exists.",
   "frontend/src/hooks/useCurrentUserProfile.ts": "React Query hooks for fetching and saving user profile with proper actor dependency handling and flash prevention.",
-  "frontend/src/hooks/useTransactions.ts": "React Query hooks for adding transactions, fetching monthly transactions, and getting monthly totals with automatic cache invalidation.",
+  "frontend/src/hooks/useTransactions.ts": "React Query hooks for managing transactions in localStorage with user-specific keys, including add transaction, fetch monthly transactions, and calculate monthly totals functionality.",
   "frontend/src/hooks/useSelectedMonth.ts": "Custom hook managing selected month/year state with localStorage persistence for user convenience.",
   "frontend/src/hooks/useMonthlyReminder.ts": "Hook managing per-user monthly reminder preferences, acknowledgment tracking, and reminder display logic using localStorage.",
   "frontend/src/index.css": "Global styles with warm green OKLCH color palette for light/dark modes, avoiding blue/purple, with emerald and teal accent colors.",
@@ -26,5 +26,6 @@
   "frontend/src/hooks/useInternetIdentity.ts": "Internet Identity authentication provider with Vite-compatible environment variable access, using import.meta.env.VITE_II_URL with fallback to default IC identity provider.",
   "frontend/src/hooks/useActor.ts": "Backend actor initialization hook with resilient access control setup, removing non-existent method calls and improving error handling for consecutive deploy cycles.",
   "frontend/src/vite-env.d.ts": "TypeScript definitions for Vite environment variables including VITE_PUBLIC_APP_URL and VITE_II_URL to prevent typecheck failures.",
-  "frontend/.env.example": "Example environment configuration file documenting optional Vite-prefixed variables for production builds and custom Internet Identity providers."
+  "frontend/.env.example": "Example environment configuration file documenting optional Vite-prefixed variables for production builds and custom Internet Identity providers.",
+  "frontend/src/types/transaction.ts": "Local type definitions for Transaction, TransactionType enum, and MonthlyTotals interface used for localStorage-based transaction management since backend doesn't support transactions."
 }

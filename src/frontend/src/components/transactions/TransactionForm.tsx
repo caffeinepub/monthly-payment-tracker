@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAddTransaction } from '../../hooks/useTransactions';
-import { TransactionType } from '../../backend';
+import { TransactionType } from '../../types/transaction';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';

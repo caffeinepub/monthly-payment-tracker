@@ -1,32 +1,65 @@
 {
   "schemaVersion": "1.0.0",
   "projectStateVersion": 3,
-  "summary": "New project",
+  "summary": "Project is a \"Payment Tracker\" app; user requests generating/exporting full project program files and folder structure, and wants to publish to production under the new name.",
   "architectural_notes": [],
-  "known_issues": [
-    "Deployment/build process is failing intermittently (\"hit a snag\" / language model error), preventing successful deploy."
-  ],
-  "isFixRequest": true,
+  "known_issues": [],
+  "isFixRequest": false,
   "existing_features": [
     {
-      "id": "feature-re-run-the-full-build-and-deployment-of-the-existing-finance-tracker-app-draft-version-2-to-production-on-the-internet-computer-ensuring-the-process-completes-successfully-end-to-end-frontend-build-canister-build-and-deploy",
-      "title": "Re-run the full build and deployment of the existing Finance Tracker app (Draft Version 2) to production on the Internet Computer, ensuring the process completes successfully end-to-end (frontend build, canister build, and deploy).",
+      "id": "feature-update-all-user-facing-app-naming-to-consistently-use-the-production-name-payment-tracker-app-across-the-frontend-document-title-metadata-login-screen-branding-text-and-alt-text-and-in-app-header-brand-label-and-any-other-visible-strings-where-the-old-name-appears-e-g-monthly-payment-tracker-payment-tracker-finance-tracker",
+      "title": "Update all user-facing app naming to consistently use the production name \"Payment Tracker App\" across the frontend (document title/metadata, login screen branding text and alt text, and in-app header/brand label) and any other visible strings where the old name appears (e.g., \"Monthly Payment Tracker\", \"Payment Tracker\", \"Finance Tracker\").",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-repo-local-export-package-that-contains-the-full-project-folder-structure-snapshot-for-delivery-create-a-top-level-folder-e-g-delivery-with-a-a-human-readable-tree-index-of-the-project-structure-and-b-a-reproducible-script-command-documented-in-that-folder-that-re-generates-the-snapshot-from-the-repo-sources-without-manual-copying",
+      "title": "Add a repo-local export package that contains the full project folder structure snapshot for delivery: create a top-level folder (e.g., \"delivery/\") with (a) a human-readable tree/index of the project structure and (b) a reproducible script/command documented in that folder that (re)generates the snapshot from the repo sources without manual copying.",
       "reqIds": [
         "REQ-2"
       ],
       "version": 1
     },
     {
-      "id": "feature-identify-and-resolve-any-deterministic-project-level-causes-of-intermittent-build-deploy-failure-e-g-dependency-install-issues-typecheck-build-errors-missing-configuration-so-that-consecutive-deployments-can-be-executed-reliably",
-      "title": "Identify and resolve any deterministic, project-level causes of intermittent build/deploy failure (e.g., dependency/install issues, typecheck/build errors, missing configuration) so that consecutive deployments can be executed reliably.",
+      "id": "feature-stabilize-and-complete-the-end-to-end-publish-flow-to-production-on-the-internet-computer-by-identifying-and-fixing-deterministic-causes-of-the-intermittent-build-deploy-failure-so-consecutive-deployments-can-complete-reliably-frontend-build-canister-build-deploy",
+      "title": "Stabilize and complete the end-to-end publish flow to production on the Internet Computer by identifying and fixing deterministic causes of the intermittent build/deploy failure so consecutive deployments can complete reliably (frontend build, canister build, deploy).",
       "reqIds": [
-        "REQ-3"
+        "REQ-4"
       ],
       "version": 1
     }
   ],
-  "new_feature_requests": [],
-  "projectName": "Re-run deployment and stabilize build for Draft Version 2",
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Publish the deployed app to production under the name \"Payment Tracker App\" (requires rename command).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Generate and provide the full project folder structure (complete app program files).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Collect problem files into a separate folder for delivery.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Collect \"problem files\" relevant to diagnosing build/deploy failures into a dedicated subfolder inside the delivery package, and include a short README describing what each collected file is used for and why it is included.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "status": "pending"
+    }
+  ],
+  "projectName": "Payment Tracker App",
   "clarification_mode": "instant",
   "clarification_rounds": 0
 }

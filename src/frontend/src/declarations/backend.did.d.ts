@@ -10,33 +10,25 @@ import type { ActorMethod } from '@icp-sdk/core/agent';
 import type { IDL } from '@icp-sdk/core/candid';
 import type { Principal } from '@icp-sdk/core/principal';
 
-export type Time = bigint;
-export interface Transaction {
-  'transactionType' : TransactionType,
-  'date' : Time,
-  'note' : string,
-  'amount' : bigint,
-}
-export type TransactionType = { 'sent' : null } |
-  { 'received' : null };
-export interface UserProfile { 'name' : string }
+export interface UserProfile { 'name' : string, 'email' : [] | [string] }
 export type UserRole = { 'admin' : null } |
   { 'user' : null } |
   { 'guest' : null };
 export interface _SERVICE {
   '_initializeAccessControlWithSecret' : ActorMethod<[string], undefined>,
-  'addTransaction' : ActorMethod<[Transaction], undefined>,
+  'addFile' : ActorMethod<[string], undefined>,
   'assignCallerUserRole' : ActorMethod<[Principal, UserRole], undefined>,
-  'getAllTransactions' : ActorMethod<[], Array<Transaction>>,
+  'clearCallerFiles' : ActorMethod<[], undefined>,
+  'deleteUserFiles' : ActorMethod<[Principal], undefined>,
+  'deleteUserProfile' : ActorMethod<[Principal], undefined>,
+  'getAllUsers' : ActorMethod<[], Array<Principal>>,
+  'getCallerFiles' : ActorMethod<[], Array<string>>,
   'getCallerUserProfile' : ActorMethod<[], [] | [UserProfile]>,
   'getCallerUserRole' : ActorMethod<[], UserRole>,
-  'getMonthlyTotals' : ActorMethod<
-    [bigint, bigint],
-    { 'totalReceived' : bigint, 'balance' : bigint, 'totalSent' : bigint }
-  >,
-  'getTransactionsForMonth' : ActorMethod<[bigint, bigint], Array<Transaction>>,
+  'getUserFiles' : ActorMethod<[Principal], Array<string>>,
   'getUserProfile' : ActorMethod<[Principal], [] | [UserProfile]>,
   'isCallerAdmin' : ActorMethod<[], boolean>,
+  'removeFile' : ActorMethod<[string], undefined>,
   'saveCallerUserProfile' : ActorMethod<[UserProfile], undefined>,
 }
 export declare const idlService: IDL.ServiceClass;

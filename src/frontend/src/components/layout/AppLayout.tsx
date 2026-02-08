@@ -44,11 +44,11 @@ export default function AppLayout() {
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center">
               <img 
                 src="/assets/generated/app-icon.dim_512x512.png" 
-                alt="App" 
+                alt="Payment Tracker App" 
                 className="w-8 h-8 rounded-lg"
               />
             </div>
-            <h1 className="text-lg font-bold text-foreground hidden sm:block">Payment Tracker</h1>
+            <h1 className="text-lg font-bold text-foreground hidden sm:block">Payment Tracker App</h1>
           </div>
           <Button
             variant="ghost"

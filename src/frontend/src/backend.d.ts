@@ -7,19 +7,9 @@ export interface None {
     __kind__: "None";
 }
 export type Option<T> = Some<T> | None;
-export type Time = bigint;
 export interface UserProfile {
     name: string;
-}
-export interface Transaction {
-    transactionType: TransactionType;
-    date: Time;
-    note: string;
-    amount: bigint;
-}
-export enum TransactionType {
-    sent = "sent",
-    received = "received"
+    email?: string;
 }
 export enum UserRole {
     admin = "admin",
@@ -27,18 +17,18 @@ export enum UserRole {
     guest = "guest"
 }
 export interface backendInterface {
-    addTransaction(transaction: Transaction): Promise<void>;
+    addFile(filename: string): Promise<void>;
     assignCallerUserRole(user: Principal, role: UserRole): Promise<void>;
-    getAllTransactions(): Promise<Array<Transaction>>;
+    clearCallerFiles(): Promise<void>;
+    deleteUserFiles(user: Principal): Promise<void>;
+    deleteUserProfile(user: Principal): Promise<void>;
+    getAllUsers(): Promise<Array<Principal>>;
+    getCallerFiles(): Promise<Array<string>>;
     getCallerUserProfile(): Promise<UserProfile | null>;
     getCallerUserRole(): Promise<UserRole>;
-    getMonthlyTotals(year: bigint, month: bigint): Promise<{
-        totalReceived: bigint;
-        balance: bigint;
-        totalSent: bigint;
-    }>;
-    getTransactionsForMonth(year: bigint, month: bigint): Promise<Array<Transaction>>;
+    getUserFiles(user: Principal): Promise<Array<string>>;
     getUserProfile(user: Principal): Promise<UserProfile | null>;
     isCallerAdmin(): Promise<boolean>;
+    removeFile(filename: string): Promise<void>;
     saveCallerUserProfile(profile: UserProfile): Promise<void>;
 }

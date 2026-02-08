@@ -27,7 +27,7 @@ export default function LoginScreen() {
           <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-2xl">
             <img 
               src="/assets/generated/app-icon.dim_512x512.png" 
-              alt="Monthly Payment Tracker" 
+              alt="Payment Tracker App" 
               className="w-20 h-20 rounded-2xl"
             />
           </div>
@@ -38,7 +38,7 @@ export default function LoginScreen() {
 
         {/* Title */}
         <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-3 text-center">
-          Monthly Payment Tracker
+          Payment Tracker App
         </h1>
         <p className="text-lg text-gray-600 dark:text-gray-300 mb-12 text-center">
           Track your income and expenses with ease

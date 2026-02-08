@@ -1,7 +1,7 @@
 import { useGetTransactionsForMonth } from '../../hooks/useTransactions';
 import { Card, CardContent } from '@/components/ui/card';
 import { TrendingUp, TrendingDown, FileText } from 'lucide-react';
-import { TransactionType } from '../../backend';
+import { TransactionType } from '../../types/transaction';
 
 interface TransactionListProps {
   month: number;

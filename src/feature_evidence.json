@@ -2,10 +2,34 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-re-run-the-full-build-and-deployment-of-the-existing-finance-tracker-app-draft-version-2-to-production-on-the-internet-computer-ensuring-the-process-completes-successfully-end-to-end-frontend-build-canister-build-and-deploy",
-      "featureTitle": "Re-run the full build and deployment of the existing Finance Tracker app (Draft Version 2) to production on the Internet Computer, ensuring the process completes successfully end-to-end (frontend build, canister build, and deploy).",
+      "featureId": "feature-update-all-user-facing-app-naming-to-consistently-use-the-production-name-payment-tracker-app-across-the-frontend-document-title-metadata-login-screen-branding-text-and-alt-text-and-in-app-header-brand-label-and-any-other-visible-strings-where-the-old-name-appears-e-g-monthly-payment-tracker-payment-tracker-finance-tracker",
+      "featureTitle": "Update all user-facing app naming to consistently use the production name \"Payment Tracker App\" across the frontend (document title/metadata, login screen branding text and alt text, and in-app header/brand label) and any other visible strings where the old name appears (e.g., \"Monthly Payment Tracker\", \"Payment Tracker\", \"Finance Tracker\").",
       "files": [
-        "frontend/README.md"
+        "frontend/README.md",
+        "frontend/index.html",
+        "frontend/src/components/auth/LoginScreen.tsx",
+        "frontend/src/components/layout/AppLayout.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-a-repo-local-export-package-that-contains-the-full-project-folder-structure-snapshot-for-delivery-create-a-top-level-folder-e-g-delivery-with-a-a-human-readable-tree-index-of-the-project-structure-and-b-a-reproducible-script-command-documented-in-that-folder-that-re-generates-the-snapshot-from-the-repo-sources-without-manual-copying",
+      "featureTitle": "Add a repo-local export package that contains the full project folder structure snapshot for delivery: create a top-level folder (e.g., \"delivery/\") with (a) a human-readable tree/index of the project structure and (b) a reproducible script/command documented in that folder that (re)generates the snapshot from the repo sources without manual copying.",
+      "files": [
+        "frontend/delivery/PROJECT_TREE.md",
+        "frontend/delivery/README.md",
+        "frontend/delivery/regenerate-export.sh"
       ],
       "components": [
         "authorization@4.0.0",
@@ -21,11 +45,12 @@
       "confidence": "high"
     },
     {
-      "featureId": "feature-identify-and-resolve-any-deterministic-project-level-causes-of-intermittent-build-deploy-failure-e-g-dependency-install-issues-typecheck-build-errors-missing-configuration-so-that-consecutive-deployments-can-be-executed-reliably",
-      "featureTitle": "Identify and resolve any deterministic, project-level causes of intermittent build/deploy failure (e.g., dependency/install issues, typecheck/build errors, missing configuration) so that consecutive deployments can be executed reliably.",
+      "featureId": "feature-stabilize-and-complete-the-end-to-end-publish-flow-to-production-on-the-internet-computer-by-identifying-and-fixing-deterministic-causes-of-the-intermittent-build-deploy-failure-so-consecutive-deployments-can-complete-reliably-frontend-build-canister-build-deploy",
+      "featureTitle": "Stabilize and complete the end-to-end publish flow to production on the Internet Computer by identifying and fixing deterministic causes of the intermittent build/deploy failure so consecutive deployments can complete reliably (frontend build, canister build, deploy).",
       "files": [
-        "frontend/.env.example",
-        "frontend/src/vite-env.d.ts"
+        "frontend/README.md",
+        "frontend/delivery/DEPLOY_TROUBLESHOOTING.md",
+        "frontend/delivery/README.md"
       ],
       "components": [
         "authorization@4.0.0",
@@ -36,7 +61,7 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-3"
+        "REQ-4"
       ],
       "confidence": "high"
     }

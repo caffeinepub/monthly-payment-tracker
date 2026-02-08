@@ -8,106 +8,70 @@
 
 import { IDL } from '@icp-sdk/core/candid';
 
-export const TransactionType = IDL.Variant({
-  'sent' : IDL.Null,
-  'received' : IDL.Null,
-});
-export const Time = IDL.Int;
-export const Transaction = IDL.Record({
-  'transactionType' : TransactionType,
-  'date' : Time,
-  'note' : IDL.Text,
-  'amount' : IDL.Nat,
-});
 export const UserRole = IDL.Variant({
   'admin' : IDL.Null,
   'user' : IDL.Null,
   'guest' : IDL.Null,
 });
-export const UserProfile = IDL.Record({ 'name' : IDL.Text });
+export const UserProfile = IDL.Record({
+  'name' : IDL.Text,
+  'email' : IDL.Opt(IDL.Text),
+});
 
 export const idlService = IDL.Service({
   '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
-  'addTransaction' : IDL.Func([Transaction], [], []),
+  'addFile' : IDL.Func([IDL.Text], [], []),
   'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
-  'getAllTransactions' : IDL.Func([], [IDL.Vec(Transaction)], ['query']),
+  'clearCallerFiles' : IDL.Func([], [], []),
+  'deleteUserFiles' : IDL.Func([IDL.Principal], [], []),
+  'deleteUserProfile' : IDL.Func([IDL.Principal], [], []),
+  'getAllUsers' : IDL.Func([], [IDL.Vec(IDL.Principal)], ['query']),
+  'getCallerFiles' : IDL.Func([], [IDL.Vec(IDL.Text)], ['query']),
   'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
   'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
-  'getMonthlyTotals' : IDL.Func(
-      [IDL.Nat, IDL.Nat],
-      [
-        IDL.Record({
-          'totalReceived' : IDL.Nat,
-          'balance' : IDL.Int,
-          'totalSent' : IDL.Nat,
-        }),
-      ],
-      [],
-    ),
-  'getTransactionsForMonth' : IDL.Func(
-      [IDL.Nat, IDL.Nat],
-      [IDL.Vec(Transaction)],
-      ['query'],
-    ),
+  'getUserFiles' : IDL.Func([IDL.Principal], [IDL.Vec(IDL.Text)], ['query']),
   'getUserProfile' : IDL.Func(
       [IDL.Principal],
       [IDL.Opt(UserProfile)],
       ['query'],
     ),
   'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
+  'removeFile' : IDL.Func([IDL.Text], [], []),
   'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
 });
 
 export const idlInitArgs = [];
 
 export const idlFactory = ({ IDL }) => {
-  const TransactionType = IDL.Variant({
-    'sent' : IDL.Null,
-    'received' : IDL.Null,
-  });
-  const Time = IDL.Int;
-  const Transaction = IDL.Record({
-    'transactionType' : TransactionType,
-    'date' : Time,
-    'note' : IDL.Text,
-    'amount' : IDL.Nat,
-  });
   const UserRole = IDL.Variant({
     'admin' : IDL.Null,
     'user' : IDL.Null,
     'guest' : IDL.Null,
   });
-  const UserProfile = IDL.Record({ 'name' : IDL.Text });
+  const UserProfile = IDL.Record({
+    'name' : IDL.Text,
+    'email' : IDL.Opt(IDL.Text),
+  });
   
   return IDL.Service({
     '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
-    'addTransaction' : IDL.Func([Transaction], [], []),
+    'addFile' : IDL.Func([IDL.Text], [], []),
     'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
-    'getAllTransactions' : IDL.Func([], [IDL.Vec(Transaction)], ['query']),
+    'clearCallerFiles' : IDL.Func([], [], []),
+    'deleteUserFiles' : IDL.Func([IDL.Principal], [], []),
+    'deleteUserProfile' : IDL.Func([IDL.Principal], [], []),
+    'getAllUsers' : IDL.Func([], [IDL.Vec(IDL.Principal)], ['query']),
+    'getCallerFiles' : IDL.Func([], [IDL.Vec(IDL.Text)], ['query']),
     'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
     'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
-    'getMonthlyTotals' : IDL.Func(
-        [IDL.Nat, IDL.Nat],
-        [
-          IDL.Record({
-            'totalReceived' : IDL.Nat,
-            'balance' : IDL.Int,
-            'totalSent' : IDL.Nat,
-          }),
-        ],
-        [],
-      ),
-    'getTransactionsForMonth' : IDL.Func(
-        [IDL.Nat, IDL.Nat],
-        [IDL.Vec(Transaction)],
-        ['query'],
-      ),
+    'getUserFiles' : IDL.Func([IDL.Principal], [IDL.Vec(IDL.Text)], ['query']),
     'getUserProfile' : IDL.Func(
         [IDL.Principal],
         [IDL.Opt(UserProfile)],
         ['query'],
       ),
     'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
+    'removeFile' : IDL.Func([IDL.Text], [], []),
     'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
   });
 };

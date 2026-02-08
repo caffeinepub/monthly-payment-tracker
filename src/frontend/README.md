@@ -1,4 +1,4 @@
-# Finance Tracker Frontend
+# Payment Tracker App Frontend
 
 A personal finance tracking application built with React, TypeScript, and Tailwind CSS, running on the Internet Computer.
 

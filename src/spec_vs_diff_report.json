@@ -1,86 +1,40 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-07T06:32:21.416Z",
-  "summary": "REQ-1 branding updates appear implemented in key UI/metadata files, but the delivery/export package requirements are only partially met because the new \"delivery\" folder is placed under frontend/ instead of top-level, and there’s insufficient evidence that a complete project tree (including backend) is generated/listed. The diff also introduces new transaction functionality (localStorage-based) and backend file-management/migration code that were not requested and may conflict with the stated non-goals.",
+  "generatedAt": "2026-02-10T12:36:09.642Z",
+  "summary": "REQ-1 appears implemented via a new export script that creates a timestamped project folder under frontend/delivery/exports and excludes common directories. REQ-3 appears implemented by updating export-zip.sh to stage files into a single top-level folder and to use English-only output while printing the final ZIP path. REQ-2 documentation update cannot be confirmed and appears incomplete/truncated based on the diff content shown.",
   "missing_requirements": [
     {
       "id": "REQ-2",
-      "requirement": "Create a top-level delivery/ export package containing (a) a human-readable full project tree/index and (b) documented reproducible regeneration steps/command; listing must include both backend and frontend.",
-      "reason": "The diff adds a delivery package under \"frontend/delivery/\" rather than a top-level \"delivery/\" folder, and the added PROJECT_TREE.md content shown is only a header with no visible structure listing (and no evidence it includes both backend and frontend).",
+      "requirement": "Update frontend/delivery/README.md to include complete, properly formatted English instructions for creating the single project folder export and (optionally) the ZIP export, including exact commands from the repository root, expected output location, and next steps to run locally (install deps + start dev server).",
+      "reason": "The README diff content appears truncated and malformed: it shows an incomplete 'From the repository root, run:' section with no command, and includes what looks like unrelated content (a lone '- project_state.json' line and an embedded JSON block), which suggests the instructions are not complete/properly formatted per the acceptance criteria.",
       "evidence": [
-        "frontend/delivery/README.md",
-        "frontend/delivery/PROJECT_TREE.md",
-        "frontend/delivery/regenerate-export.sh"
-      ]
-    },
-    {
-      "id": "REQ-3",
-      "requirement": "Collect build/deploy problem files into a dedicated subfolder inside the delivery package, with a README explaining each file and why it’s included.",
-      "reason": "Problem files are collected under \"frontend/delivery/problem-files/\" (not under a top-level delivery package as requested). Also, the script only shows copying frontend files; no evidence of backend build/deploy problem files being collected.",
-      "evidence": [
-        "frontend/delivery/regenerate-export.sh"
-      ]
-    },
-    {
-      "id": "REQ-4",
-      "requirement": "Stabilize end-to-end build/deploy (frontend build, canister build, deploy) by fixing deterministic causes of intermittent failures; add a short troubleshooting note describing fixes and how to reproduce a successful deploy.",
-      "reason": "A troubleshooting document was added, but the diff summary does not provide evidence of concrete fixes to build/deploy determinism (dependency/config/type issues) or that consecutive deployments now succeed reliably.",
-      "evidence": [
-        "frontend/delivery/DEPLOY_TROUBLESHOOTING.md",
-        "backend/main.mo"
+        "frontend/delivery/README.md"
       ]
     }
   ],
   "hallucinated_features": [
     {
-      "description": "Introduced a localStorage-based transactions feature set (types, hooks, UI components, charts) including add/list/summary behavior.",
-      "reason": "BuildRequest explicitly lists as non-goal adding new product functionality beyond publishing/exporting; transactions functionality represents additional product capability.",
+      "description": "Added/embedded unrelated 'project_state.json' content (a JSON block) into the delivery README content shown in the diff.",
+      "reason": "The BuildRequest only asked to update delivery documentation with export instructions; it did not request adding project state metadata or embedding JSON state content in README.",
       "evidence": [
-        "frontend/src/hooks/useTransactions.ts",
-        "frontend/src/types/transaction.ts",
-        "frontend/src/components/transactions/TransactionForm.tsx",
-        "frontend/src/components/transactions/TransactionList.tsx",
-        "frontend/src/components/charts/IncomeVsExpenseChart.tsx",
-        "frontend-file-summaries.txt"
+        "frontend/delivery/README.md"
       ]
     },
     {
-      "description": "Added backend migration module and expanded backend data model/endpoints for user files/transactionFiles management.",
-      "reason": "Not requested by any REQ; also potentially introduces new backend behaviors beyond publishing/exporting scope.",
+      "description": "Modified/added frontend-file-summaries.txt.",
+      "reason": "The BuildRequest requirements are limited to delivery scripts and delivery documentation; updating a 'frontend-file-summaries.txt' file is not requested.",
       "evidence": [
-        "backend/migration.mo",
-        "backend/main.mo"
-      ]
-    },
-    {
-      "description": "Added numerous UX/feature copy and screens emphasizing manual entry, visual insights, monthly reminders, etc.",
-      "reason": "These represent additional product/UX enhancements not requested in the BuildRequest (scope limited to naming, delivery export package, problem files, and deploy stabilization).",
-      "evidence": [
-        "frontend/src/components/auth/LoginScreen.tsx",
-        "frontend/src/components/layout/AppLayout.tsx",
         "frontend-file-summaries.txt"
       ]
     }
   ],
-  "confidence": 0.74,
+  "confidence": 0.72,
   "changed_files": [
-    "backend/main.mo",
-    "backend/migration.mo",
     "frontend-file-summaries.txt",
-    "frontend/README.md",
-    "frontend/delivery/DEPLOY_TROUBLESHOOTING.md",
-    "frontend/delivery/PROJECT_TREE.md",
     "frontend/delivery/README.md",
-    "frontend/delivery/regenerate-export.sh",
-    "frontend/index.html",
-    "frontend/src/components/auth/LoginScreen.tsx",
-    "frontend/src/components/charts/IncomeVsExpenseChart.tsx",
-    "frontend/src/components/layout/AppLayout.tsx",
-    "frontend/src/components/transactions/TransactionForm.tsx",
-    "frontend/src/components/transactions/TransactionList.tsx",
-    "frontend/src/hooks/useTransactions.ts",
-    "frontend/src/types/transaction.ts",
+    "frontend/delivery/export-project-folder.sh",
+    "frontend/delivery/export-zip.sh",
     "project_state.json"
   ]
 }

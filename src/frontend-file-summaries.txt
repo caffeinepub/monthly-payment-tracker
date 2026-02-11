@@ -27,5 +27,9 @@
   "frontend/src/hooks/useActor.ts": "Backend actor initialization hook with resilient access control setup, removing non-existent method calls and improving error handling for consecutive deploy cycles.",
   "frontend/src/vite-env.d.ts": "TypeScript definitions for Vite environment variables including VITE_PUBLIC_APP_URL and VITE_II_URL to prevent typecheck failures.",
   "frontend/.env.example": "Example environment configuration file documenting optional Vite-prefixed variables for production builds and custom Internet Identity providers.",
-  "frontend/src/types/transaction.ts": "Local type definitions for Transaction, TransactionType enum, and MonthlyTotals interface used for localStorage-based transaction management since backend doesn't support transactions."
+  "frontend/src/types/transaction.ts": "Local type definitions for Transaction, TransactionType enum, and MonthlyTotals interface used for localStorage-based transaction management since backend doesn't support transactions.",
+  "frontend/delivery/export-zip.sh": "Updated bash script that creates a timestamped ZIP archive containing all repository source files in a single top-level folder, with English-only console output, final absolute ZIP path display, and next-steps instructions.",
+  "frontend/delivery/.gitignore": "Gitignore file that prevents committing generated ZIP exports from the delivery/exports directory.",
+  "frontend/delivery/README.md": "Complete delivery documentation with properly formatted instructions for both project folder and ZIP exports, including exact commands, output locations, included/excluded content, and step-by-step instructions for running the exported application locally.",
+  "frontend/delivery/export-project-folder.sh": "Bash script that creates a timestamped project folder export under frontend/delivery/exports/ containing all repository source files while excluding build artifacts, dependencies, and version control files, with English-only console output and final absolute path display."
 }

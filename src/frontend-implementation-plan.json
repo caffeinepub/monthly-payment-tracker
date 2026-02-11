@@ -1,123 +1,54 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Payment Tracker App – frontend naming + delivery export package + publish-flow docs",
+  "title": "Single local project-folder export + improved delivery docs and ZIP export output",
   "requirements": [
     {
       "id": "REQ-1",
-      "summary": "Rename all user-facing strings to consistently use the production name “Payment Tracker App” across the frontend UI and docs.",
+      "summary": "Add a delivery script to export the entire repository into a single local project folder with the same exclusions as the ZIP export.",
       "acceptanceCriteria": [
-        "Browser tab title shows \"Payment Tracker App\" (instead of \"Monthly Payment Tracker\").",
-        "Login screen title/branding uses \"Payment Tracker App\" (instead of \"Monthly Payment Tracker\").",
-        "App header brand label uses \"Payment Tracker App\" (instead of \"Payment Tracker\").",
-        "No remaining user-visible occurrences of \"Finance Tracker\" in the frontend README or UI copy."
+        "A new script exists under frontend/delivery/ that creates a single folder containing the whole project (one top-level directory)",
+        "The script excludes the same directories already excluded by frontend/delivery/export-zip.sh (.git, node_modules, dist, build, .dfx, frontend/delivery/exports, etc.)",
+        "Running the script twice does not corrupt previous exports (either creates a timestamped folder or cleanly overwrites a dedicated output folder)",
+        "The script prints the final on-disk path of the generated project folder using English-only output"
       ],
       "file_operations": [
         {
-          "path": "frontend/index.html",
-          "operation": "modify",
-          "description": "Update the document <title> to “Payment Tracker App” and ensure any other visible metadata strings do not reference prior names."
-        },
-        {
-          "path": "frontend/src/components/auth/LoginScreen.tsx",
-          "operation": "modify",
-          "description": "Update login screen branding text to “Payment Tracker App”, including the app icon alt text and the large title string (replace “Monthly Payment Tracker”)."
-        },
-        {
-          "path": "frontend/src/components/layout/AppLayout.tsx",
-          "operation": "modify",
-          "description": "Update the in-app header brand label to “Payment Tracker App” and ensure header icon alt text is appropriate and consistent with the new app name."
-        },
-        {
-          "path": "frontend/README.md",
-          "operation": "modify",
-          "description": "Update README title and any occurrences of “Finance Tracker” / older app naming to “Payment Tracker App”, ensuring user-visible documentation matches production branding."
+          "path": "frontend/delivery/export-project-folder.sh",
+          "operation": "create",
+          "description": "Create a bash delivery script that uses the repo root as input and writes a single exported project directory under frontend/delivery/exports/ (e.g., timestamped) while excluding the same directories as export-zip.sh (including .git, node_modules, dist, build, .dfx, and frontend/delivery/exports). Ensure reruns are safe (timestamped output folder or clean overwrite) and print the final absolute on-disk output path using English-only messages."
         }
       ]
     },
     {
       "id": "REQ-2",
-      "summary": "Add a repo-local delivery export package containing a project structure snapshot and a reproducible regeneration script/command.",
+      "summary": "Update delivery documentation with complete English instructions for exporting a single project folder and optionally creating a ZIP export.",
       "acceptanceCriteria": [
-        "A new top-level delivery folder exists containing an index file that lists the full project folder structure.",
-        "Delivery folder includes documented steps to regenerate the export from the repository (single command or clearly ordered steps).",
-        "The export content includes both backend and frontend code folders in the structure listing."
+        "frontend/delivery/README.md includes complete, properly formatted instructions (no truncated code blocks)",
+        "Docs include: command(s) to run, expected output location, and what to do next to run the app locally (install dependencies + start dev server)",
+        "All user-facing text in the updated docs is in English"
       ],
       "file_operations": [
         {
-          "path": "frontend/delivery/PROJECT_TREE.md",
-          "operation": "create",
-          "description": "Create a human-readable project structure index (tree listing) that explicitly includes both frontend/ and backend/ in the listing (as repo paths), suitable for delivery packaging."
-        },
-        {
           "path": "frontend/delivery/README.md",
-          "operation": "create",
-          "description": "Document how to regenerate the delivery snapshot from the repository sources (single command or clearly ordered steps), including how to re-create the structure listing and problem-files collection."
-        },
-        {
-          "path": "frontend/delivery/regenerate-export.sh",
-          "operation": "create",
-          "description": "Add a reproducible script that regenerates the delivery snapshot (structure listing + copies/refreshes problem-files) directly from the repo sources without manual copying; keep it runnable from repo root or with clearly documented working directory expectations."
+          "operation": "modify",
+          "description": "Rewrite/complete the delivery README to include properly formatted, non-truncated code blocks that show exact commands to run from the repository root for (1) creating the single exported project folder via the new script and (2) optionally creating the ZIP via export-zip.sh. Document the exact output locations on disk (frontend/delivery/exports/...) and include next steps for running locally (install dependencies + start dev server). Ensure all user-facing text is English-only."
         }
       ]
     },
     {
       "id": "REQ-3",
-      "summary": "Collect build/deploy troubleshooting “problem files” into a dedicated subfolder under the delivery package with a README describing relevance.",
+      "summary": "Ensure the existing ZIP export remains single-top-level-folder and uses English-only console output with a final full ZIP path.",
       "acceptanceCriteria": [
-        "A dedicated subfolder exists under the delivery folder (e.g., delivery/problem-files/) containing the selected build/deploy-related config/docs files.",
-        "A README in that subfolder lists each included file and its troubleshooting relevance (e.g., env examples, type env declarations, build/deploy docs)."
+        "frontend/delivery/export-zip.sh output messages are English-only",
+        "The resulting ZIP contains a single top-level directory (no files at the ZIP root)",
+        "The script prints the full output ZIP path at the end"
       ],
       "file_operations": [
         {
-          "path": "frontend/delivery/problem-files/README.md",
-          "operation": "create",
-          "description": "Create a short README that enumerates each collected file and explains how it helps diagnose build/deploy failures (environment configuration, frontend build setup, IC/II configuration, etc.)."
-        },
-        {
-          "path": "frontend/delivery/problem-files/frontend.env.example",
-          "operation": "create",
-          "description": "Include a copy of frontend/.env.example (renamed for clarity in the delivery folder) to aid troubleshooting environment-variable-related build and runtime configuration."
-        },
-        {
-          "path": "frontend/delivery/problem-files/frontend.vite-env.d.ts",
-          "operation": "create",
-          "description": "Include a copy of frontend/src/vite-env.d.ts to aid troubleshooting TypeScript env typing issues that can break builds."
-        },
-        {
-          "path": "frontend/delivery/problem-files/frontend.index.html",
-          "operation": "create",
-          "description": "Include a copy of frontend/index.html to aid troubleshooting asset paths, metadata/title, and entrypoint configuration that can affect builds/deploys."
-        },
-        {
-          "path": "frontend/delivery/problem-files/frontend.README.md",
-          "operation": "create",
-          "description": "Include a copy of frontend/README.md to aid troubleshooting by providing the documented local build/run steps and prerequisites used for deployments."
-        }
-      ]
-    },
-    {
-      "id": "REQ-4",
-      "summary": "Stabilize the publish flow by documenting a deterministic frontend build/deploy procedure and adding troubleshooting notes aligned with what was fixed.",
-      "acceptanceCriteria": [
-        "A full build and deploy can be executed end-to-end without intermittent failures caused by missing configuration, type errors, or dependency issues.",
-        "A short deployment troubleshooting note is added to documentation (or delivery notes) describing what was fixed and how to reproduce a successful deploy."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/README.md",
+          "path": "frontend/delivery/export-zip.sh",
           "operation": "modify",
-          "description": "Add a concise deployment/build troubleshooting section focused on deterministic frontend steps (install/build), required tooling versions, and common failure causes (missing env vars, type errors, dependency install state), including how to reproduce a successful build."
-        },
-        {
-          "path": "frontend/delivery/DEPLOY_TROUBLESHOOTING.md",
-          "operation": "create",
-          "description": "Add delivery notes describing what was fixed/standardized to prevent intermittent publish failures and a reproducible checklist to validate a successful frontend build prior to deployment."
-        },
-        {
-          "path": "frontend/delivery/README.md",
-          "operation": "modify",
-          "description": "Link the delivery regeneration steps to the deployment troubleshooting notes and ensure the delivery package explains how the included snapshots/problem-files support diagnosing publish issues."
+          "description": "Update console output to be English-only (remove emoji-only cues) and ensure the final line prints the full absolute ZIP path. Preserve the current behavior that produces a ZIP containing exactly one top-level folder (the staged directory) and no files at the ZIP root."
         }
       ]
     }

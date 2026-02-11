@@ -1,32 +1,36 @@
 {
   "schemaVersion": "1.0.0",
   "projectStateVersion": 3,
-  "summary": "Project is a \"Payment Tracker\" app; user requests generating/exporting full project program files and folder structure, and wants to publish to production under the new name.",
-  "architectural_notes": [],
-  "known_issues": [],
+  "summary": "New project",
+  "architectural_notes": [
+    "Project distribution relies on a local ZIP export script (frontend/delivery/export-zip.sh) rather than chat-hosted downloads."
+  ],
+  "known_issues": [
+    "User reports provided project ZIP download links are not working and they currently have no local project files."
+  ],
   "isFixRequest": false,
   "existing_features": [
     {
-      "id": "feature-update-all-user-facing-app-naming-to-consistently-use-the-production-name-payment-tracker-app-across-the-frontend-document-title-metadata-login-screen-branding-text-and-alt-text-and-in-app-header-brand-label-and-any-other-visible-strings-where-the-old-name-appears-e-g-monthly-payment-tracker-payment-tracker-finance-tracker",
-      "title": "Update all user-facing app naming to consistently use the production name \"Payment Tracker App\" across the frontend (document title/metadata, login screen branding text and alt text, and in-app header/brand label) and any other visible strings where the old name appears (e.g., \"Monthly Payment Tracker\", \"Payment Tracker\", \"Finance Tracker\").",
+      "id": "feature-add-a-delivery-script-that-gathers-copies-the-entire-repository-into-a-single-local-project-folder-so-the-user-can-place-all-program-files-into-one-directory-on-their-computer-in-one-command-excluding-git-node-modules-dist-build-dfx-and-existing-exports",
+      "title": "Add a delivery script that gathers/copies the entire repository into a single local \"project folder\" so the user can place all program files into one directory on their computer in one command (excluding .git, node_modules, dist/build, .dfx, and existing exports).",
       "reqIds": [
         "REQ-1"
       ],
       "version": 1
     },
     {
-      "id": "feature-add-a-repo-local-export-package-that-contains-the-full-project-folder-structure-snapshot-for-delivery-create-a-top-level-folder-e-g-delivery-with-a-a-human-readable-tree-index-of-the-project-structure-and-b-a-reproducible-script-command-documented-in-that-folder-that-re-generates-the-snapshot-from-the-repo-sources-without-manual-copying",
-      "title": "Add a repo-local export package that contains the full project folder structure snapshot for delivery: create a top-level folder (e.g., \"delivery/\") with (a) a human-readable tree/index of the project structure and (b) a reproducible script/command documented in that folder that (re)generates the snapshot from the repo sources without manual copying.",
+      "id": "feature-update-the-delivery-documentation-to-clearly-explain-how-to-create-the-single-project-folder-and-optionally-how-to-create-the-zip-including-exact-commands-to-run-from-the-repository-root-and-where-the-output-will-be-located-on-disk",
+      "title": "Update the delivery documentation to clearly explain how to create the single project folder and (optionally) how to create the ZIP, including exact commands to run from the repository root and where the output will be located on disk.",
       "reqIds": [
         "REQ-2"
       ],
       "version": 1
     },
     {
-      "id": "feature-stabilize-and-complete-the-end-to-end-publish-flow-to-production-on-the-internet-computer-by-identifying-and-fixing-deterministic-causes-of-the-intermittent-build-deploy-failure-so-consecutive-deployments-can-complete-reliably-frontend-build-canister-build-deploy",
-      "title": "Stabilize and complete the end-to-end publish flow to production on the Internet Computer by identifying and fixing deterministic causes of the intermittent build/deploy failure so consecutive deployments can complete reliably (frontend build, canister build, deploy).",
+      "id": "feature-ensure-the-existing-zip-export-continues-to-produce-an-archive-that-contains-exactly-one-top-level-folder-with-all-program-files-and-that-the-console-output-is-english-only-remove-emoji-only-cues-if-present",
+      "title": "Ensure the existing ZIP export continues to produce an archive that contains exactly one top-level folder with all program files, and that the console output is English-only (remove emoji-only cues if present).",
       "reqIds": [
-        "REQ-4"
+        "REQ-3"
       ],
       "version": 1
     }
@@ -34,32 +38,12 @@
   "new_feature_requests": [
     {
       "id": "AR-1",
-      "summary": "Publish the deployed app to production under the name \"Payment Tracker App\" (requires rename command).",
+      "summary": "Provide a reliable way for the user to obtain all program files in a single project folder/ZIP (download link or export workflow)",
       "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-2",
-      "summary": "Generate and provide the full project folder structure (complete app program files).",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-3",
-      "summary": "Collect problem files into a separate folder for delivery.",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-6",
-      "summary": "Collect \"problem files\" relevant to diagnosing build/deploy failures into a dedicated subfolder inside the delivery package, and include a short README describing what each collected file is used for and why it is included.",
-      "reqIds": [
-        "REQ-3"
-      ],
       "status": "pending"
     }
   ],
-  "projectName": "Payment Tracker App",
+  "projectName": "Create a single local “project folder” export for all program files",
   "clarification_mode": "instant",
   "clarification_rounds": 0
 }

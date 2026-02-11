@@ -1,12 +1,12 @@
 # Specification
 
 ## Summary
-**Goal:** Finalize the Payment Tracker App for reliable production publishing on the Internet Computer, ensure consistent app naming, and package a reproducible delivery export (including troubleshooting “problem files”).
+**Goal:** Add a one-command way to export the entire repository into a single local “project folder”, and update delivery docs/output to be clear and English-only.
 
 **Planned changes:**
-- Update all user-facing naming/branding strings across the frontend to consistently use “Payment Tracker App” (document title/metadata, login branding text/alt text, in-app header/brand label, and any remaining legacy names like “Monthly Payment Tracker”, “Payment Tracker”, or “Finance Tracker”).
-- Add a repo-local `delivery/` folder containing a human-readable project structure index (full snapshot of frontend + backend folders) and documented, reproducible steps (single command or clear sequence) to regenerate the export from the repo without manual copying.
-- Add `delivery/problem-files/` containing build/deploy troubleshooting-relevant files, plus a README explaining what each file is and why it’s included.
-- Identify and fix deterministic causes of intermittent build/deploy failures and add a short troubleshooting note describing what was fixed and how to reliably reproduce a successful end-to-end build + deploy.
+- Add a new script under `frontend/delivery/` that copies the repository into one exported top-level folder while excluding `.git`, `node_modules`, `dist`, `build`, `.dfx`, and existing export directories.
+- Ensure the folder export is safe to run multiple times (timestamped output or clean overwrite) and prints the final on-disk output path in English.
+- Update `frontend/delivery/README.md` with complete English instructions for creating the project folder export and (optionally) the ZIP export, including exact commands from repo root, output locations, and the next steps to run locally (install deps + start dev server).
+- Adjust the existing `frontend/delivery/export-zip.sh` to keep producing a ZIP with exactly one top-level directory, and ensure console output is English-only and prints the full ZIP path at the end.
 
-**User-visible outcome:** The app shows “Payment Tracker App” everywhere users see the name, deployments can be run end-to-end reliably, and a `delivery/` package exists with a reproducible project snapshot plus a clearly documented set of “problem files” for diagnosing build/deploy issues.
+**User-visible outcome:** The user can run a command to generate a single exported project folder on disk containing all program files (with standard exclusions), can still generate a clean ZIP with one top-level folder, and can follow updated English documentation to export and run the app locally.

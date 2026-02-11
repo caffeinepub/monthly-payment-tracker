@@ -1,101 +1,59 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-07T06:32:21.419Z",
+  "generatedAt": "2026-02-10T12:36:09.645Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 4,
+    "total": 3,
     "implemented": 3,
     "items": [
       {
         "id": "REQ-1",
-        "summary": "Update all user-facing app naming to consistently use the production name \"Payment Tracker App\" across the frontend (document title/metadata, login screen branding text and alt text, and in-app header/brand label) and any other visible strings where the old name appears (e.g., \"Monthly Payment Tracker\", \"Payment Tracker\", \"Finance Tracker\").",
+        "summary": "Add a delivery script that gathers/copies the entire repository into a single local \"project folder\" so the user can place all program files into one directory on their computer in one command (excluding .git, node_modules, dist/build, .dfx, and existing exports).",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/index.html",
-          "frontend/src/components/auth/LoginScreen.tsx",
-          "frontend/src/components/layout/AppLayout.tsx",
-          "frontend/README.md"
+          "frontend/delivery/export-project-folder.sh"
         ],
         "matchedFiles": [
-          "frontend/index.html",
-          "frontend/src/components/auth/LoginScreen.tsx",
-          "frontend/src/components/layout/AppLayout.tsx",
-          "frontend/README.md"
+          "frontend/delivery/export-project-folder.sh"
         ]
       },
       {
         "id": "REQ-2",
-        "summary": "Add a repo-local export package that contains the full project folder structure snapshot for delivery: create a top-level folder (e.g., \"delivery/\") with (a) a human-readable tree/index of the project structure and (b) a reproducible script/command documented in that folder that (re)generates the snapshot from the repo sources without manual copying.",
+        "summary": "Update the delivery documentation to clearly explain how to create the single project folder and (optionally) how to create the ZIP, including exact commands to run from the repository root and where the output will be located on disk.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/delivery/PROJECT_TREE.md",
-          "frontend/delivery/README.md",
-          "frontend/delivery/regenerate-export.sh"
+          "frontend/delivery/README.md"
         ],
         "matchedFiles": [
-          "frontend/delivery/PROJECT_TREE.md",
-          "frontend/delivery/README.md",
-          "frontend/delivery/regenerate-export.sh"
+          "frontend/delivery/README.md"
         ]
       },
       {
         "id": "REQ-3",
-        "summary": "Collect \"problem files\" relevant to diagnosing build/deploy failures into a dedicated subfolder inside the delivery package, and include a short README describing what each collected file is used for and why it is included.",
-        "status": "missing",
-        "plannedFiles": [
-          "frontend/delivery/problem-files/README.md",
-          "frontend/delivery/problem-files/frontend.env.example",
-          "frontend/delivery/problem-files/frontend.vite-env.d.ts",
-          "frontend/delivery/problem-files/frontend.index.html",
-          "frontend/delivery/problem-files/frontend.README.md"
-        ],
-        "matchedFiles": []
-      },
-      {
-        "id": "REQ-4",
-        "summary": "Stabilize and complete the end-to-end publish flow to production on the Internet Computer by identifying and fixing deterministic causes of the intermittent build/deploy failure so consecutive deployments can complete reliably (frontend build, canister build, deploy).",
+        "summary": "Ensure the existing ZIP export continues to produce an archive that contains exactly one top-level folder with all program files, and that the console output is English-only (remove emoji-only cues if present).",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/README.md",
-          "frontend/delivery/DEPLOY_TROUBLESHOOTING.md",
-          "frontend/delivery/README.md"
+          "frontend/delivery/export-zip.sh"
         ],
         "matchedFiles": [
-          "frontend/README.md",
-          "frontend/delivery/DEPLOY_TROUBLESHOOTING.md",
-          "frontend/delivery/README.md"
+          "frontend/delivery/export-zip.sh"
         ]
       }
     ]
   },
   "changedFiles": [
-    "backend/main.mo",
-    "backend/migration.mo",
     "build-request.json",
+    "caffeine.lock.json",
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/README.md",
-    "frontend/delivery/DEPLOY_TROUBLESHOOTING.md",
-    "frontend/delivery/PROJECT_TREE.md",
     "frontend/delivery/README.md",
-    "frontend/delivery/regenerate-export.sh",
-    "frontend/index.html",
-    "frontend/src/backend.d.ts",
-    "frontend/src/backend.ts",
-    "frontend/src/components/auth/LoginScreen.tsx",
-    "frontend/src/components/charts/IncomeVsExpenseChart.tsx",
-    "frontend/src/components/layout/AppLayout.tsx",
-    "frontend/src/components/transactions/TransactionForm.tsx",
-    "frontend/src/components/transactions/TransactionList.tsx",
-    "frontend/src/declarations/backend.did.d.ts",
-    "frontend/src/declarations/backend.did.js",
-    "frontend/src/hooks/useTransactions.ts",
-    "frontend/src/types/transaction.ts",
+    "frontend/delivery/export-project-folder.sh",
+    "frontend/delivery/export-zip.sh",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

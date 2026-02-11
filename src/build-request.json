@@ -1,104 +1,84 @@
 {
   "kind": "build_request",
-  "title": "Finalize Payment Tracker App publishing + export full project and problem files",
+  "title": "Create a single local “project folder” export for all program files",
   "priority": "normal",
   "requirements": [
     {
       "id": "REQ-1",
-      "text": "Update all user-facing app naming to consistently use the production name \"Payment Tracker App\" across the frontend (document title/metadata, login screen branding text and alt text, and in-app header/brand label) and any other visible strings where the old name appears (e.g., \"Monthly Payment Tracker\", \"Payment Tracker\", \"Finance Tracker\").",
+      "text": "Add a delivery script that gathers/copies the entire repository into a single local \"project folder\" so the user can place all program files into one directory on their computer in one command (excluding .git, node_modules, dist/build, .dfx, and existing exports).",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1",
-          "msg-2",
-          "msg-3",
-          "msg-4"
+          "msg-1"
         ],
         "quotes": [
-          "Payment Tracker app",
-          "Publish it",
-          "Rename this to Payment Tracker App",
-          "Go ahead"
+          "Move all the program files to project folder"
         ]
       },
       "acceptanceCriteria": [
-        "Browser tab title shows \"Payment Tracker App\" (instead of \"Monthly Payment Tracker\").",
-        "Login screen title/branding uses \"Payment Tracker App\" (instead of \"Monthly Payment Tracker\").",
-        "App header brand label uses \"Payment Tracker App\" (instead of \"Payment Tracker\").",
-        "No remaining user-visible occurrences of \"Finance Tracker\" in the frontend README or UI copy."
+        "A new script exists under frontend/delivery/ that creates a single folder containing the whole project (one top-level directory)",
+        "The script excludes the same directories already excluded by frontend/delivery/export-zip.sh (.git, node_modules, dist, build, .dfx, frontend/delivery/exports, etc.)",
+        "Running the script twice does not corrupt previous exports (either creates a timestamped folder or cleanly overwrites a dedicated output folder)",
+        "The script prints the final on-disk path of the generated project folder using English-only output"
       ]
     },
     {
       "id": "REQ-2",
-      "text": "Add a repo-local export package that contains the full project folder structure snapshot for delivery: create a top-level folder (e.g., \"delivery/\") with (a) a human-readable tree/index of the project structure and (b) a reproducible script/command documented in that folder that (re)generates the snapshot from the repo sources without manual copying.",
-      "target": "both",
+      "text": "Update the delivery documentation to clearly explain how to create the single project folder and (optionally) how to create the ZIP, including exact commands to run from the repository root and where the output will be located on disk.",
+      "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-5",
-          "msg-6",
-          "msg-7"
+          "msg-1"
         ],
         "quotes": [
-          "Full projects folder structure",
-          "Yes",
-          "Go ahead"
+          "Move all the program files to project folder"
         ]
       },
       "acceptanceCriteria": [
-        "A new top-level delivery folder exists containing an index file that lists the full project folder structure.",
-        "Delivery folder includes documented steps to regenerate the export from the repository (single command or clearly ordered steps).",
-        "The export content includes both backend and frontend code folders in the structure listing."
+        "frontend/delivery/README.md includes complete, properly formatted instructions (no truncated code blocks)",
+        "Docs include: command(s) to run, expected output location, and what to do next to run the app locally (install dependencies + start dev server)",
+        "All user-facing text in the updated docs is in English"
       ]
     },
     {
       "id": "REQ-3",
-      "text": "Collect \"problem files\" relevant to diagnosing build/deploy failures into a dedicated subfolder inside the delivery package, and include a short README describing what each collected file is used for and why it is included.",
-      "target": "both",
+      "text": "Ensure the existing ZIP export continues to produce an archive that contains exactly one top-level folder with all program files, and that the console output is English-only (remove emoji-only cues if present).",
+      "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-8"
+          "msg-1"
         ],
         "quotes": [
-          "Okk I need all the problem files in a separate folder and send to me"
+          "Move all the program files to project folder"
         ]
       },
       "acceptanceCriteria": [
-        "A dedicated subfolder exists under the delivery folder (e.g., delivery/problem-files/) containing the selected build/deploy-related config/docs files.",
-        "A README in that subfolder lists each included file and its troubleshooting relevance (e.g., env examples, type env declarations, build/deploy docs)."
-      ]
-    },
-    {
-      "id": "REQ-4",
-      "text": "Stabilize and complete the end-to-end publish flow to production on the Internet Computer by identifying and fixing deterministic causes of the intermittent build/deploy failure so consecutive deployments can complete reliably (frontend build, canister build, deploy).",
-      "target": "both",
-      "source": {
-        "messageIds": [
-          "msg-2",
-          "msg-9"
-        ],
-        "quotes": [
-          "Publish it",
-          "Deployment/build process is failing intermittently (\"hit a snag\" / language model error), preventing successful deploy."
-        ]
-      },
-      "acceptanceCriteria": [
-        "A full build and deploy can be executed end-to-end without intermittent failures caused by missing configuration, type errors, or dependency issues.",
-        "A short deployment troubleshooting note is added to documentation (or delivery notes) describing what was fixed and how to reproduce a successful deploy."
+        "frontend/delivery/export-zip.sh output messages are English-only",
+        "The resulting ZIP contains a single top-level directory (no files at the ZIP root)",
+        "The script prints the full output ZIP path at the end"
       ]
     }
   ],
   "constraints": [
-    "Backend must remain a single Motoko actor in backend/main.mo; do not introduce additional backend services.",
-    "Do not edit files under frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, or any files in frontend/src/components/ui; compose or wrap instead.",
-    "Use English for any user-facing text."
+    "Do not modify files under frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, or any code under frontend/src/components/ui (immutable paths).",
+    "Backend must remain a single Motoko actor; do not introduce additional backend services."
   ],
   "nonGoals": [
-    "Adding new product functionality beyond publishing/exporting (e.g., bank connections, automatic imports, budgeting features).",
-    "Introducing third-party authentication providers beyond Internet Identity.",
-    "Adding external databases or non-Motoko backend services."
+    "Generating or hosting an online download link for the ZIP (the system cannot host files).",
+    "Running the website or scripts on behalf of the user from within chat."
   ],
   "imageRequirements": {
     "required": [],
     "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
   }
 }

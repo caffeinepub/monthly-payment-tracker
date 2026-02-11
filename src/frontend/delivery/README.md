@@ -1,25 +1,23 @@
-# Delivery Package - Payment Tracker App
+# Delivery & Export
 
-This delivery package contains a snapshot of the Payment Tracker App project structure and key configuration files for troubleshooting build and deployment issues.
+This directory contains tooling for exporting the complete application source code.
 
-## Contents
+## Export Options
 
-- **PROJECT_TREE.md** - Complete project folder structure listing
-- **DEPLOY_TROUBLESHOOTING.md** - Deployment troubleshooting guide with fixes applied
-- **problem-files/** - Key configuration and documentation files for debugging
-- **regenerate-export.sh** - Script to regenerate this delivery package
+You can export the project in two formats:
 
-## Purpose
+1. **Project Folder** - A ready-to-use directory containing all source files
+2. **ZIP Archive** - A compressed archive containing all source files in a single top-level folder
 
-This package serves as:
-1. A reference snapshot of the complete project structure
-2. A collection of critical files for diagnosing build/deploy failures
-3. A reproducible export that can be regenerated from the repository
+Both exports include the complete frontend and backend code, configuration files, and assets. They exclude build artifacts, dependencies, and version control files.
 
-## Regenerating the Export
+---
 
-To refresh this delivery package from the repository sources:
+## Project Folder Export
 
-### Option 1: Using the Script
+Generate a complete project folder with all program files.
 
-From the repository root:
+### Usage
+
+From the repository root, run:
+
